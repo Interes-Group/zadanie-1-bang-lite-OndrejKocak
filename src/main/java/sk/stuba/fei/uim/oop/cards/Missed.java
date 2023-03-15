@@ -1,0 +1,10 @@
+package sk.stuba.fei.uim.oop.cards;
+
+import sk.stuba.fei.uim.oop.table.Table;
+
+public class Missed extends Card{
+    private static final String CARD_NAME = "Missed";
+    public Missed() {
+        super(CARD_NAME);
+    }
+}
