@@ -1,7 +1,6 @@
 package sk.stuba.fei.uim.oop.cards;
 
 import sk.stuba.fei.uim.oop.player.Player;
-import sk.stuba.fei.uim.oop.table.Table;
 
 import java.util.List;
 
@@ -18,5 +17,7 @@ public abstract class Card {
     public void play(Player player, List<Player> playersAlive){
         System.out.println("Player " + player.getName() + " played card: " + this.name);
     }
+
+    public abstract boolean isPlayable(Player currentPlayer);
 
 }
