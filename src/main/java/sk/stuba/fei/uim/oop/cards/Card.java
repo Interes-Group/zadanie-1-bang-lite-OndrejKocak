@@ -14,8 +14,8 @@ public abstract class Card {
     public String getName() {
         return name;
     }
-    public void play(Player player, List<Player> playersAlive){
-        System.out.println("Player " + player.getName() + " played card: " + this.name);
+    public void play(Player playerOnTurn, List<Player> playersAlive){
+        System.out.println("Player " + playerOnTurn.getName() + " played card: " + this.name);
     }
 
     public abstract boolean isPlayable(Player currentPlayer);

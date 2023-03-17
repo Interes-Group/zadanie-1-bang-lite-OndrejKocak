@@ -11,9 +11,10 @@ public class Beer extends Card{
     }
 
     @Override
-    public void play(Player player, List<Player> playersAlive) {
-        super.play(player, playersAlive);
-        player.addLive();
+    public void play(Player playerOnTurn, List<Player> playersAlive) {
+        super.play(playerOnTurn, playersAlive);
+        playerOnTurn.addLive();
+        System.out.println(playerOnTurn.getName() + "s lives increased to " + playerOnTurn.getLives());
     }
 
     @Override

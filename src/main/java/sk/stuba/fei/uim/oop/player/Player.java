@@ -51,13 +51,6 @@ public class Player {
         return playableCards;
     }
 
-    public void printCards(){
-        System.out.println("Cards in "+ this.name + "'s hand: ");
-        for(Card card : cardsInHand){
-            System.out.println(card.getName());
-        }
-    }
-
     public List<Card> getCardsInHand() {
         return cardsInHand;
     }

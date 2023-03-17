@@ -4,7 +4,6 @@ import sk.stuba.fei.uim.oop.cards.*;
 import sk.stuba.fei.uim.oop.player.Player;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class Table {
