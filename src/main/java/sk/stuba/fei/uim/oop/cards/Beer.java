@@ -1,6 +1,7 @@
 package sk.stuba.fei.uim.oop.cards;
 
 import sk.stuba.fei.uim.oop.player.Player;
+import sk.stuba.fei.uim.oop.table.Table;
 
 import java.util.List;
 
@@ -11,8 +12,8 @@ public class Beer extends Card{
     }
 
     @Override
-    public void play(Player playerOnTurn, List<Player> playersAlive) {
-        super.play(playerOnTurn, playersAlive);
+    public void play(Player playerOnTurn, List<Player> playersAlive, Table table) {
+        super.play(playerOnTurn, playersAlive, table);
         playerOnTurn.addLive();
         System.out.println(playerOnTurn.getName() + "s lives increased to " + playerOnTurn.getLives());
     }

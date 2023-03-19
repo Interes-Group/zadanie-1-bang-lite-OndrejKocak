@@ -4,7 +4,6 @@ import sk.stuba.fei.uim.oop.cards.Card;
 import sk.stuba.fei.uim.oop.table.Table;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 import sk.stuba.fei.uim.oop.player.Player;
-import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,57 +32,90 @@ public class Game {
             this.players[i] = new Player(playerName);
         }
         this.table = new Table(this.players);
-        printSpacer();
+        this.printSpacer();
         this.startGame();
     }
 
     private void startGame(){
         System.out.println("Game started");
         while(this.getNumberOfPlayersAlive() > 1){
-            printSpacer();
+            this.printSpacer();
             Player playerOnTurn = this.players[currentPlayer];
-            System.out.println("Player " + playerOnTurn.getName() + " is starting his turn.");
+            System.out.println("Player " + playerOnTurn.getName() + " is starting his/her turn.");
             //TODO check activeBlueCards
             if(playerOnTurn.isAlive()){
                 this.makeTurn(playerOnTurn);
             }
-            break;
+            incrementCounter();
         }
+        Player winner = getWinner();
+        System.out.println("Everyone died. Except " + winner.getName() + " who now dominates wild west.");
+
     }
 
     private void makeTurn(Player playerOnTurn){
-        drawCards(playerOnTurn);
+        this.drawCards(playerOnTurn);
         List<Card> playableCards = playerOnTurn.getPlayableCards();
+        System.out.println("Lives: "+ playerOnTurn.getLives());
         System.out.println("Cards in "+ playerOnTurn.getName() + "s hand:");
-        printCards(playerOnTurn.getCardsInHand());
-        while(playableCards.size() > 0){
-            System.out.println("Do you want play card? (yes/no)");
-            if(!KeyboardInput.readBoolean()){
+        this.printCards(playerOnTurn.getCardsInHand(), false);
+        while(playableCards.size() > 0 & this.getNumberOfPlayersAlive() > 1){
+            this.printSpacer();
+            System.out.println("Do you want continue your turn?");
+            System.out.println("(1) Play the card");
+            System.out.println("(0) End turn");
+            int continueTurn = KeyboardInput.readInt();
+            if(continueTurn == 1){
+                this.printSpacer();
+                this.playCard(playerOnTurn, playableCards);
+            } else if (continueTurn == 0) {
+                this.printSpacer();
+                this.discardCard(playerOnTurn);
                 break;
             }
-            this.playCard(playerOnTurn, playableCards);
+            else {
+                System.out.println("You entered wrong number. Please try again");
+            }
         }
     }
 
     private void playCard(Player playerOnTurn,List<Card> playableCards){
+        int choosedCardIndex = this.chooseCard(playableCards, "play");
+        this.printSpacer();
+        Card choosedCard = playableCards.remove(choosedCardIndex);
+        playerOnTurn.removeCardFromHand(choosedCard);
+        choosedCard.play(playerOnTurn, this.getPlayersAlive(), this.table);
+    }
+
+    private void discardCard(Player playerOnTurn){
+        int choosedCardIndex = 0;
+        List<Card> cardsOnHand = playerOnTurn.getCardsInHand();
+        while(playerOnTurn.getCardsInHand().size() > playerOnTurn.getLives()){
+            this.printSpacer();
+            System.out.println("You have more cards in your hand than you have lives you need to discard some.");
+            choosedCardIndex = this.chooseCard(cardsOnHand, "discard");
+            Card choosedCard = cardsOnHand.get(choosedCardIndex);
+            playerOnTurn.removeCardFromHand(choosedCard);
+            this.table.discardCard(choosedCard);
+        }
+    }
+
+    private int chooseCard(List<Card> cards, String verb){
         int choosedCardIndex = 0;
         while(true){
-            System.out.println("You can play this cards: ");
-            printCards(playableCards);
-            System.out.println("(0) Cancel play");
-            choosedCardIndex = ZKlavesnice.readInt("Enter the number of card you want to play:");
-
-            if((choosedCardIndex < 0) | (choosedCardIndex > playableCards.size())){
+            System.out.println("You can "+ verb + " this cards: ");
+            printCards(cards, true);
+            if(verb.equals("play")){
+                System.out.println("(0) Cancel play");
+            }
+            choosedCardIndex = KeyboardInput.readInt("Enter the number of card you want to play");
+            if((choosedCardIndex < 0) | (choosedCardIndex > cards.size())){
                 System.out.println("You entered wrong number! Please try again");
-            } else if (choosedCardIndex == 0) {
-                return;
             } else{
                 break;
             }
         }
-        Card choosedCard = playableCards.remove(choosedCardIndex - 1);
-        choosedCard.play(playerOnTurn, this.getPlayersAlive());
-        this.table.discardCard(choosedCard);
+        return choosedCardIndex-1;
     }
 
     private void drawCards(Player playerOnTurn){
@@ -92,9 +124,15 @@ public class Game {
         }
     }
 
-    private void printCards(List<Card> cards){
+
+    private void printCards(List<Card> cards, boolean indexes){
         for(int i = 0; i < cards.size(); i++){
-            System.out.println("("+ (i+1) + ") " + cards.get(i).getName());
+            if(indexes){
+                System.out.println("("+ (i+1) + ") " + cards.get(i).getName());
+            }
+            else {
+                System.out.println("--> " + cards.get(i).getName());
+            }
         }
     }
 
@@ -119,5 +157,19 @@ public class Game {
             }
         }
         return count;
+    }
+
+    private void incrementCounter(){
+        this.currentPlayer++;
+        this.currentPlayer = this.currentPlayer % this.players.length;
+    }
+
+    private Player getWinner(){
+        for(Player player: this.players){
+            if(player.isAlive()){
+                return player;
+            }
+        }
+        return null;
     }
 }

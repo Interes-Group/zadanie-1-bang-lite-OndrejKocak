@@ -41,6 +41,10 @@ public class Player {
         cardsInHand.add(card);
     }
 
+    public void removeCardFromHand(Card card){
+        cardsInHand.remove(card);
+    }
+
     public List<Card> getPlayableCards(){
         List<Card> playableCards = new ArrayList<Card>();
         for(Card card : cardsInHand){

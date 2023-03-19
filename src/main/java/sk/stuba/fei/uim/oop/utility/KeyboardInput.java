@@ -152,7 +152,6 @@ public class KeyboardInput {
         try {
             return readBoolean();
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
             return defaultValue;
         }
     }
