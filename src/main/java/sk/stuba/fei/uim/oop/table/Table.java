@@ -5,6 +5,7 @@ import sk.stuba.fei.uim.oop.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Table {
     private ArrayList<Card> deck = new ArrayList<Card>();
@@ -13,9 +14,7 @@ public class Table {
     public Table(Player[] players) {
         this.createDeck();
         for(Player player : players){
-            for(int i = 0; i<4; i++){
-                player.takeCard(this.drawCard());
-            }
+            player.takeCards(this.drawCards(4));
         }
     }
 
@@ -26,17 +25,24 @@ public class Table {
         for(int i = 0; i < 15; i++){
             this.deck.add(new Missed());
         }
-        for(int i = 0; i <8; i++){
+        for(int i = 0; i < 8; i++){
             this.deck.add(new Beer());
+        }
+        for(int i = 0; i < 4; i++){
+            this.deck.add(new Stagecoach());
         }
         Collections.shuffle(this.deck);
     }
 
-    public Card drawCard(){
-        if(deck.size() == 0){
-            swapDecks();
+    public List<Card> drawCards(int n){
+        List<Card> cards = new ArrayList<Card>();
+        for(int i = 0; i < n;i++) {
+            if (deck.size() == 0) {
+                swapDecks();
+            }
+            cards.add(this.deck.remove(0));
         }
-        return deck.remove(0);
+        return cards;
     }
     public void discardCard(Card card){
         discardedDeck.add(card);

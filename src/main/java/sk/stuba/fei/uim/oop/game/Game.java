@@ -28,7 +28,7 @@ public class Game {
         }
         this.players = new Player[numberOfPlayers];
         for(int i = 0; i < players.length; i++){
-            String playerName = KeyboardInput.readString("Enter name of player " + Integer.toString(i+1));
+            String playerName = KeyboardInput.readString("Enter name of player " + (i+1));
             this.players[i] = new Player(playerName);
         }
         this.table = new Table(this.players);
@@ -37,7 +37,7 @@ public class Game {
     }
 
     private void startGame(){
-        System.out.println("Game started");
+        System.out.println("============= Game started =============");
         while(this.getNumberOfPlayersAlive() > 1){
             this.printSpacer();
             Player playerOnTurn = this.players[currentPlayer];
@@ -54,17 +54,19 @@ public class Game {
     }
 
     private void makeTurn(Player playerOnTurn){
-        this.drawCards(playerOnTurn);
+        playerOnTurn.takeCards(table.drawCards(2));
         List<Card> playableCards = playerOnTurn.getPlayableCards();
         System.out.println("Lives: "+ playerOnTurn.getLives());
-        System.out.println("Cards in "+ playerOnTurn.getName() + "s hand:");
-        this.printCards(playerOnTurn.getCardsInHand(), false);
+
         while(playableCards.size() > 0 & this.getNumberOfPlayersAlive() > 1){
+            System.out.println("Cards in "+ playerOnTurn.getName() + "s hand:");
+            this.printCards(playerOnTurn.getCardsInHand(), false);
             this.printSpacer();
             System.out.println("Do you want continue your turn?");
             System.out.println("(1) Play the card");
             System.out.println("(0) End turn");
             int continueTurn = KeyboardInput.readInt();
+
             if(continueTurn == 1){
                 this.printSpacer();
                 this.playCard(playerOnTurn, playableCards);
@@ -76,6 +78,7 @@ public class Game {
             else {
                 System.out.println("You entered wrong number. Please try again");
             }
+            this.printSpacer();
         }
     }
 
@@ -118,11 +121,7 @@ public class Game {
         return choosedCardIndex-1;
     }
 
-    private void drawCards(Player playerOnTurn){
-        for(int i = 0; i < 2; i++){
-            playerOnTurn.takeCard(this.table.drawCard());
-        }
-    }
+
 
 
     private void printCards(List<Card> cards, boolean indexes){
@@ -137,7 +136,7 @@ public class Game {
     }
 
     private void printSpacer(){
-        System.out.println("=======================================");
+        System.out.println("========================================");
     }
 
     private List<Player> getPlayersAlive(){

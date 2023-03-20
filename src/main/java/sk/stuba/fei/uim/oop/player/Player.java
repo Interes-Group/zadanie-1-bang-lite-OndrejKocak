@@ -37,8 +37,8 @@ public class Player {
         return lives > 0;
     }
 
-    public void takeCard(Card card){
-        cardsInHand.add(card);
+    public void takeCards(List<Card> cards){
+        this.cardsInHand.addAll(cards);
     }
 
     public void removeCardFromHand(Card card){
