@@ -12,14 +12,10 @@ public class Beer extends Card{
     }
 
     @Override
-    public void play(Player playerOnTurn, List<Player> playersAlive, Table table) {
-        super.play(playerOnTurn, playersAlive, table);
+    public void play(Player playerOnTurn, List<Player> enemies, Table table) {
+        super.play(playerOnTurn, enemies, table);
         playerOnTurn.addLive();
         System.out.println(playerOnTurn.getName() + "s lives increased to " + playerOnTurn.getLives());
     }
 
-    @Override
-    public boolean isPlayable(Player currentPlayer) {
-        return true;
-    }
 }

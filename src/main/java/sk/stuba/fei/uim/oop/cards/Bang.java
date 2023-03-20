@@ -12,9 +12,9 @@ public class Bang extends Card{
     }
 
     @Override
-    public void play(Player playerOnTurn, List<Player> playersAlive, Table table) {
-        super.play(playerOnTurn, playersAlive, table);
-        Player target = super.selectTarget(playerOnTurn, playersAlive);
+    public void play(Player playerOnTurn, List<Player> enemies, Table table) {
+        super.play(playerOnTurn, enemies, table);
+        Player target = super.selectTarget(playerOnTurn, enemies);
         for(Card card : target.getCardsInHand()){
             if(card instanceof Missed){
                 System.out.println("Player "+ target.getName() + " dodged your Bang with Missed.");
@@ -27,8 +27,4 @@ public class Bang extends Card{
         System.out.println("Player "+ target.getName() + " was shot with Bang and lost 1 live.");
     }
 
-    @Override
-    public boolean isPlayable(Player currentPlayer) {
-        return true;
-    }
 }

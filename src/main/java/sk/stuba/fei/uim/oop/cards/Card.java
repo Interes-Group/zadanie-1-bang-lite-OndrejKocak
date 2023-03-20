@@ -16,13 +16,12 @@ public abstract class Card {
     public String getName() {
         return name;
     }
-    public void play(Player playerOnTurn, List<Player> playersAlive, Table table){
+    public void play(Player playerOnTurn, List<Player> enemies, Table table){
         System.out.println("Player " + playerOnTurn.getName() + " played card: " + this.name);
         table.discardCard(this);
     }
 
     protected final Player selectTarget(Player playerOnTurn, List<Player> playersAlive){
-        playersAlive.remove(playerOnTurn);
         int targetIndex = 0;
         System.out.println("Available targets: ");
         for(int i = 0; i < playersAlive.size(); i++){
@@ -40,6 +39,8 @@ public abstract class Card {
         return playersAlive.get(targetIndex);
     }
 
-    public abstract boolean isPlayable(Player currentPlayer);
+    public boolean isPlayable(Player currentPlayer, List<Player> enemies){
+        return true;
+    }
 
 }

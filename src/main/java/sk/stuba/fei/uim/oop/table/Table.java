@@ -31,6 +31,9 @@ public class Table {
         for(int i = 0; i < 4; i++){
             this.deck.add(new Stagecoach());
         }
+        for(int i = 0; i < 2; i++){
+            this.deck.add(new Indians());
+        }
         Collections.shuffle(this.deck);
     }
 

@@ -13,15 +13,11 @@ public class Stagecoach extends Card{
     }
 
     @Override
-    public void play(Player playerOnTurn, List<Player> playersAlive, Table table) {
-        super.play(playerOnTurn, playersAlive, table);
+    public void play(Player playerOnTurn, List<Player> enemies, Table table) {
+        super.play(playerOnTurn, enemies, table);
         List<Card> drawnCards = table.drawCards(2);
         playerOnTurn.takeCards(drawnCards);
         System.out.println("Player " + playerOnTurn.getName() + " drawn 2 cards.");
     }
 
-    @Override
-    public boolean isPlayable(Player currentPlayer) {
-        return true;
-    }
 }

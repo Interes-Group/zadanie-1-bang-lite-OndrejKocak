@@ -55,11 +55,11 @@ public class Game {
 
     private void makeTurn(Player playerOnTurn){
         playerOnTurn.takeCards(table.drawCards(2));
-        List<Card> playableCards = playerOnTurn.getPlayableCards();
+        List<Card> playableCards = playerOnTurn.getPlayableCards(this.getEnemies(playerOnTurn));
         System.out.println("Lives: "+ playerOnTurn.getLives());
 
         while(playableCards.size() > 0 & this.getNumberOfPlayersAlive() > 1){
-            System.out.println("Cards in "+ playerOnTurn.getName() + "s hand:");
+            System.out.println("Cards in "+ playerOnTurn.getName() + "'s hand:");
             this.printCards(playerOnTurn.getCardsInHand(), false);
             this.printSpacer();
             System.out.println("Do you want continue your turn?");
@@ -87,7 +87,7 @@ public class Game {
         this.printSpacer();
         Card choosedCard = playableCards.remove(choosedCardIndex);
         playerOnTurn.removeCardFromHand(choosedCard);
-        choosedCard.play(playerOnTurn, this.getPlayersAlive(), this.table);
+        choosedCard.play(playerOnTurn, this.getEnemies(playerOnTurn), this.table);
     }
 
     private void discardCard(Player playerOnTurn){
@@ -139,10 +139,10 @@ public class Game {
         System.out.println("========================================");
     }
 
-    private List<Player> getPlayersAlive(){
+    private List<Player> getEnemies(Player playerOnTurn){
         List<Player> playersAlive = new ArrayList<Player>();
         for(Player player : this.players){
-            if(player.isAlive()){
+            if(player.isAlive() & !player.equals(playerOnTurn)){
                 playersAlive.add(player);
             }
         }

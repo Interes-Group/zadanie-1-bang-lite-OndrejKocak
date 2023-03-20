@@ -45,10 +45,14 @@ public class Player {
         cardsInHand.remove(card);
     }
 
-    public List<Card> getPlayableCards(){
+    public void removeCardFromActiveBlueCards(Card card){
+        activeBlueCards.remove(card);
+    }
+
+    public List<Card> getPlayableCards(List<Player> playersAlive){
         List<Card> playableCards = new ArrayList<Card>();
         for(Card card : cardsInHand){
-            if(card.isPlayable(this)){
+            if(card.isPlayable(this, playersAlive)){
                 playableCards.add(card);
             }
         }
