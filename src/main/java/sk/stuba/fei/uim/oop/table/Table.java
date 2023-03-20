@@ -34,6 +34,9 @@ public class Table {
         for(int i = 0; i < 2; i++){
             this.deck.add(new Indians());
         }
+        for(int i = 0; i < 6; i++){
+            this.deck.add(new CatBalou());
+        }
         Collections.shuffle(this.deck);
     }
 

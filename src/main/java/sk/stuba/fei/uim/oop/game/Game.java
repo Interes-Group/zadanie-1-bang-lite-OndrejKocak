@@ -41,9 +41,9 @@ public class Game {
         while(this.getNumberOfPlayersAlive() > 1){
             this.printSpacer();
             Player playerOnTurn = this.players[currentPlayer];
-            System.out.println("Player " + playerOnTurn.getName() + " is starting his/her turn.");
             //TODO check activeBlueCards
             if(playerOnTurn.isAlive()){
+                System.out.println("Player " + playerOnTurn.getName() + " is starting his/her turn.");
                 this.makeTurn(playerOnTurn);
             }
             incrementCounter();
@@ -55,10 +55,9 @@ public class Game {
 
     private void makeTurn(Player playerOnTurn){
         playerOnTurn.takeCards(table.drawCards(2));
-        List<Card> playableCards = playerOnTurn.getPlayableCards(this.getEnemies(playerOnTurn));
         System.out.println("Lives: "+ playerOnTurn.getLives());
-
-        while(playableCards.size() > 0 & this.getNumberOfPlayersAlive() > 1){
+        int numberOfPlayableCards = playerOnTurn.getNumberOfPlayableCards(this.getEnemies(playerOnTurn));
+        while(numberOfPlayableCards > 0 & this.getNumberOfPlayersAlive() > 1){
             System.out.println("Cards in "+ playerOnTurn.getName() + "'s hand:");
             this.printCards(playerOnTurn.getCardsInHand(), false);
             this.printSpacer();
@@ -69,23 +68,28 @@ public class Game {
 
             if(continueTurn == 1){
                 this.printSpacer();
-                this.playCard(playerOnTurn, playableCards);
+                this.playCard(playerOnTurn);
+                numberOfPlayableCards = playerOnTurn.getNumberOfPlayableCards(this.getEnemies(playerOnTurn));
             } else if (continueTurn == 0) {
                 this.printSpacer();
                 this.discardCard(playerOnTurn);
                 break;
             }
             else {
-                System.out.println("You entered wrong number. Please try again");
+                System.out.println("You entered wrong number. Please try again.");
             }
             this.printSpacer();
         }
+        if(numberOfPlayableCards == 0){
+            System.out.println("You don't have any more playable cards. Your turn is ending.");
+        }
     }
 
-    private void playCard(Player playerOnTurn,List<Card> playableCards){
+    private void playCard(Player playerOnTurn){
+        List<Card> playableCards = playerOnTurn.getPlayableCards(getEnemies(playerOnTurn));
         int choosedCardIndex = this.chooseCard(playableCards, "play");
         this.printSpacer();
-        Card choosedCard = playableCards.remove(choosedCardIndex);
+        Card choosedCard = playableCards.get(choosedCardIndex);
         playerOnTurn.removeCardFromHand(choosedCard);
         choosedCard.play(playerOnTurn, this.getEnemies(playerOnTurn), this.table);
     }

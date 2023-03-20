@@ -18,9 +18,10 @@ public class CatBalou extends Card{
     @Override
     public void play(Player playerOnTurn, List<Player> enemies, Table table) {
         super.play(playerOnTurn, enemies, table);
+        this.filterEnemiesWithoutCards(enemies);
         Player target = super.selectTarget(playerOnTurn, enemies);
-        int cardInHand = target.getCardsInHand().size();
-        int activeBlueCards = target.getActiveBlueCards().size();
+        int cardInHand = target.getNumberOfCardsHand();
+        int activeBlueCards = target.getNumberOfCardsActiveBlueCards();
         if(cardInHand > 0 & activeBlueCards > 0){
             int select = 0;
             while(true){
@@ -45,8 +46,17 @@ public class CatBalou extends Card{
         }
     }
 
+    private void filterEnemiesWithoutCards(List<Player> enemies){
+        for(Player player : enemies){
+            if(player.getNumberOfCardsHand() == 0 & player.getNumberOfCardsActiveBlueCards() == 0){
+                System.out.println("You cannot play Cat Balou on "+player.getName()+" because he/she doesn't have any cards.");
+                enemies.remove(player);
+            }
+        }
+    }
 
-    public Card chooseCard(Player target, int select){
+
+    private Card chooseCard(Player target, int select){
         int cardIndex = 0;
         Card card = null;
         if(select == 1){
@@ -71,6 +81,7 @@ public class CatBalou extends Card{
                 return true;
             }
         }
+        System.out.println("You cannot play Cat balou because your enemies don't have any cards.");
         return false;
     }
 

@@ -29,7 +29,7 @@ public class Indians extends Card{
                 System.out.println("Player "+ player.getName() + " dont have bang and lost 1 live");
             }
             else {
-                System.out.println("Player "+ player.getName() + " discarted bang");
+                System.out.println("Player "+ player.getName() + " discarded bang");
             }
         }
     }

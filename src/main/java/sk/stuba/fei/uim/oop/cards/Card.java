@@ -21,22 +21,29 @@ public abstract class Card {
         table.discardCard(this);
     }
 
-    protected final Player selectTarget(Player playerOnTurn, List<Player> playersAlive){
+    protected final Player selectTarget(Player playerOnTurn, List<Player> enemies){
         int targetIndex = 0;
         System.out.println("Available targets: ");
-        for(int i = 0; i < playersAlive.size(); i++){
-            Player player = playersAlive.get(i);
-            System.out.println("("+(i+1)+") " + player.getName() + "  lives: " + player.getLives());
+        for(int i = 0; i < enemies.size(); i++){
+            Player player = enemies.get(i);
+            if(this instanceof Bang){
+                System.out.println("("+(i+1)+") " + player.getName() + "  lives: " + player.getLives());
+            } else if (this instanceof CatBalou) {
+                System.out.println("("+(i+1)+") " + player.getName());
+                System.out.println("--> Hand: "+ player.getCardsInHand().size());
+                System.out.println("--> Active blue cards: " + player.getActiveBlueCards().size());
+            }
+
         }
         while(true){
             targetIndex = KeyboardInput.readInt("Enter the number of your target ");
-            if(targetIndex > 0 & targetIndex <= playersAlive.size()){
+            if(targetIndex > 0 & targetIndex <= enemies.size()){
                 targetIndex--;
                 break;
             }
             System.out.println("You entered wrong number. Please try again.");
         }
-        return playersAlive.get(targetIndex);
+        return enemies.get(targetIndex);
     }
 
     public boolean isPlayable(Player currentPlayer, List<Player> enemies){

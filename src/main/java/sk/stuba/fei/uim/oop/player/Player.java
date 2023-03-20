@@ -49,10 +49,10 @@ public class Player {
         activeBlueCards.remove(card);
     }
 
-    public List<Card> getPlayableCards(List<Player> playersAlive){
+    public List<Card> getPlayableCards(List<Player> enemies){
         List<Card> playableCards = new ArrayList<Card>();
         for(Card card : cardsInHand){
-            if(card.isPlayable(this, playersAlive)){
+            if(card.isPlayable(this, enemies)){
                 playableCards.add(card);
             }
         }
@@ -65,5 +65,16 @@ public class Player {
 
     public List<Card> getActiveBlueCards() {
         return activeBlueCards;
+    }
+
+    public int getNumberOfCardsHand(){
+        return cardsInHand.size();
+    }
+    public int getNumberOfCardsActiveBlueCards(){
+        return activeBlueCards.size();
+    }
+
+    public int getNumberOfPlayableCards(List<Player> enemies){
+        return getPlayableCards(enemies).size();
     }
 }
