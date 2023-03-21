@@ -5,7 +5,7 @@ import sk.stuba.fei.uim.oop.table.Table;
 
 import java.util.List;
 
-public class Beer extends Card{
+public class Beer extends BrownCard{
     private static final String CARD_NAME = "Beer";
     public Beer(){
         super(CARD_NAME);

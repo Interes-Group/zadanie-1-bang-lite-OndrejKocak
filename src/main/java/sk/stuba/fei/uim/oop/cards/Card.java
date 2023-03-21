@@ -18,7 +18,6 @@ public abstract class Card {
     }
     public void play(Player playerOnTurn, List<Player> enemies, Table table){
         System.out.println("Player " + playerOnTurn.getName() + " played card: " + this.name);
-        table.discardCard(this);
     }
 
     protected final Player selectTarget(Player playerOnTurn, List<Player> enemies){
@@ -44,6 +43,15 @@ public abstract class Card {
             System.out.println("You entered wrong number. Please try again.");
         }
         return enemies.get(targetIndex);
+    }
+
+    protected final void checkKill(Player target, Table table){
+        if(!target.isAlive()){
+            for (Card card : target.die()){
+                table.discardCard(card);
+            }
+            System.out.println("Player "+target.getName()+" died.");
+        }
     }
 
     public boolean isPlayable(Player currentPlayer, List<Player> enemies){

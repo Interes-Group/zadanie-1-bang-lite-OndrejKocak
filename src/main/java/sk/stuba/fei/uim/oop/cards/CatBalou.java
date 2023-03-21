@@ -7,7 +7,7 @@ import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 import java.util.List;
 import java.util.Random;
 
-public class CatBalou extends Card{
+public class CatBalou extends BrownCard{
     private static final String CARD_NAME="Cat Balou";
     private Random random;
     public CatBalou() {

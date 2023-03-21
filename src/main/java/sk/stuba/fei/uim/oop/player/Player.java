@@ -1,5 +1,6 @@
 package sk.stuba.fei.uim.oop.player;
 
+import sk.stuba.fei.uim.oop.cards.BlueCard;
 import sk.stuba.fei.uim.oop.cards.Card;
 
 import java.util.ArrayList;
@@ -8,13 +9,13 @@ import java.util.List;
 public class Player {
     private final String name;
     private List<Card> cardsInHand;
-    private  List<Card> activeBlueCards;
+    private  List<BlueCard> activeBlueCards;
     private int lives;
     public Player(String name) {
         this.name = name;
         this.lives = 4;
         this.cardsInHand = new ArrayList<Card>();
-        this.activeBlueCards = new ArrayList<Card>();
+        this.activeBlueCards = new ArrayList<BlueCard>();
     }
 
     public String getName() {
@@ -41,6 +42,14 @@ public class Player {
         this.cardsInHand.addAll(cards);
     }
 
+    public void activateCard(BlueCard card){
+        activeBlueCards.add(card);
+    }
+
+    public void removeCardFromActive(BlueCard card){
+        activeBlueCards.remove(card);
+    }
+
     public void removeCardFromHand(Card card){
         cardsInHand.remove(card);
     }
@@ -63,7 +72,7 @@ public class Player {
         return cardsInHand;
     }
 
-    public List<Card> getActiveBlueCards() {
+    public List<BlueCard> getActiveBlueCards() {
         return activeBlueCards;
     }
 
@@ -76,5 +85,14 @@ public class Player {
 
     public int getNumberOfPlayableCards(List<Player> enemies){
         return getPlayableCards(enemies).size();
+    }
+
+    public List<Card> die(){
+        List<Card> allCards = new ArrayList<Card>();
+        allCards.addAll(cardsInHand);
+        cardsInHand.clear();
+        allCards.addAll(activeBlueCards);
+        activeBlueCards.clear();
+        return allCards;
     }
 }

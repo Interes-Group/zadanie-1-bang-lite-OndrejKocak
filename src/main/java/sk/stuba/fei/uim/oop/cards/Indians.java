@@ -5,7 +5,7 @@ import sk.stuba.fei.uim.oop.table.Table;
 
 import java.util.List;
 
-public class Indians extends Card{
+public class Indians extends BrownCard{
     private static final String CARD_NAME="Indians";
     public Indians() {
         super(CARD_NAME);
@@ -14,22 +14,23 @@ public class Indians extends Card{
     @Override
     public void play(Player playerOnTurn, List<Player> enemies, Table table) {
         super.play(playerOnTurn, enemies, table);
-        for(Player player : enemies){
+        for(Player target : enemies){
             boolean hasBang = false;
-            for(Card card : player.getCardsInHand()){
+            for(Card card : target.getCardsInHand()){
                 if(card instanceof Bang){
                     hasBang = true;
-                    player.removeCardFromHand(card);
+                    target.removeCardFromHand(card);
                     table.discardCard(card);
                     break;
                 }
             }
             if(!hasBang){
-                player.removeLive();
-                System.out.println("Player "+ player.getName() + " dont have bang and lost 1 live");
+                target.removeLive();
+                System.out.println("Player "+ target.getName() + " dont have bang and lost 1 live");
+                super.checkKill(target, table);
             }
             else {
-                System.out.println("Player "+ player.getName() + " discarded bang");
+                System.out.println("Player "+ target.getName() + " discarded bang");
             }
         }
     }

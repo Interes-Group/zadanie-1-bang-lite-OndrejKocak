@@ -5,7 +5,7 @@ import sk.stuba.fei.uim.oop.table.Table;
 
 import java.util.List;
 
-public class Stagecoach extends Card{
+public class Stagecoach extends BrownCard{
     private static final String CARD_NAME="Stagecoach";
 
     public Stagecoach() {
