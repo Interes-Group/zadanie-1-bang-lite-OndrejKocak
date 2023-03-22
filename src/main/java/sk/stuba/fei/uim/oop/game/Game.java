@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Game {
     private final Player[] players;
-    private Table table;
+    private final Table table;
     private int currentPlayer;
     public Game() {
         System.out.println("===== Welcome to BANG! =====");
@@ -44,8 +44,8 @@ public class Game {
         while(this.getNumberOfPlayersAlive() > 1){
             this.printSpacer();
             Player playerOnTurn = this.players[currentPlayer];
-            //TODO check activeBlueCards
-            if(playerOnTurn.isAlive()){
+            checkDynamite(playerOnTurn);
+            if(playerOnTurn.isAlive() && !checkPrison(playerOnTurn)){
                 System.out.println("Player " + playerOnTurn.getName() + " is starting his/her turn.");
                 this.makeTurn(playerOnTurn);
             }
@@ -157,6 +157,7 @@ public class Game {
         return playersAlive;
     }
 
+
     private void checkDynamite(Player playerOnTurn){
         for(BlueCard card : playerOnTurn.getActiveBlueCards()){
             if(card instanceof Dynamite){
@@ -191,6 +192,7 @@ public class Game {
             if(card instanceof Prison){
                 player.removeCardFromActive(card);
                 table.discardCard(card);
+                System.out.println("Player "+ player.getName() + "is in prison his turn will be skipped.");
                 return card.checkEffect();
             }
         }
