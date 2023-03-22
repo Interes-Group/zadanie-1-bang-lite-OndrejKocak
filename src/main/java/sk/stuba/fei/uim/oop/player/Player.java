@@ -8,14 +8,14 @@ import java.util.List;
 
 public class Player {
     private final String name;
-    private List<Card> cardsInHand;
-    private  List<BlueCard> activeBlueCards;
+    private final List<Card> cardsInHand;
+    private  final List<BlueCard> activeBlueCards;
     private int lives;
     public Player(String name) {
         this.name = name;
         this.lives = 4;
-        this.cardsInHand = new ArrayList<Card>();
-        this.activeBlueCards = new ArrayList<BlueCard>();
+        this.cardsInHand = new ArrayList<>();
+        this.activeBlueCards = new ArrayList<>();
     }
 
     public String getName() {
@@ -61,12 +61,12 @@ public class Player {
         cardsInHand.remove(card);
     }
 
-    public void removeCardFromActiveBlueCards(Card card){
+    public void removeCardFromActiveBlueCards(BlueCard card){
         activeBlueCards.remove(card);
     }
 
     public List<Card> getPlayableCards(List<Player> enemies){
-        List<Card> playableCards = new ArrayList<Card>();
+        List<Card> playableCards = new ArrayList<>();
         for(Card card : cardsInHand){
             if(card.isPlayable(this, enemies)){
                 playableCards.add(card);
@@ -95,8 +95,7 @@ public class Player {
     }
 
     public List<Card> die(){
-        List<Card> allCards = new ArrayList<Card>();
-        allCards.addAll(cardsInHand);
+        List<Card> allCards = new ArrayList<>(cardsInHand);
         cardsInHand.clear();
         allCards.addAll(activeBlueCards);
         activeBlueCards.clear();

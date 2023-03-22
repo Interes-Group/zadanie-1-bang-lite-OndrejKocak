@@ -1,7 +1,7 @@
 package sk.stuba.fei.uim.oop.cards.brown;
 
 import sk.stuba.fei.uim.oop.cards.Card;
-import sk.stuba.fei.uim.oop.cards.brown.BrownCard;
+import sk.stuba.fei.uim.oop.cards.blue.BlueCard;
 import sk.stuba.fei.uim.oop.player.Player;
 import sk.stuba.fei.uim.oop.table.Table;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class CatBalou extends BrownCard {
     private static final String CARD_NAME="Cat Balou";
-    private Random random;
+    private final Random random;
     public CatBalou() {
         super(CARD_NAME);
         random = new Random();
@@ -25,7 +25,7 @@ public class CatBalou extends BrownCard {
         int cardInHand = target.getNumberOfCardsHand();
         int activeBlueCards = target.getNumberOfCardsActiveBlueCards();
         if(cardInHand > 0 & activeBlueCards > 0){
-            int select = 0;
+            int select;
             while(true){
                 System.out.println("Select from where you want to discard card: ");
                 System.out.println("(1) Hand: " + cardInHand + " cards");
@@ -59,8 +59,8 @@ public class CatBalou extends BrownCard {
 
 
     private Card chooseCard(Player target, int select){
-        int cardIndex = 0;
-        Card card = null;
+        int cardIndex;
+        Card card;
         if(select == 1){
             cardIndex = random.nextInt(target.getCardsInHand().size());
             card = target.getCardsInHand().get(cardIndex);
@@ -70,7 +70,7 @@ public class CatBalou extends BrownCard {
         else {
             cardIndex = random.nextInt(target.getActiveBlueCards().size());
             card = target.getActiveBlueCards().get(cardIndex);
-            target.removeCardFromActiveBlueCards(card);
+            target.removeCardFromActiveBlueCards((BlueCard) card);
             System.out.println("Card " + card.getName() +" was discarded from "+ target.getName() + "'s active cards");
         }
         return card;
