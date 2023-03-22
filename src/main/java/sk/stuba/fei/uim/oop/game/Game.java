@@ -165,6 +165,7 @@ public class Game {
                     ((Dynamite) card).explode(playerOnTurn);
                 }
                 else {
+                    System.out.println("Dynamite didn't exploded.");
                     moveDynamite(card);
                     playerOnTurn.removeCardFromActive(card);
                 }
@@ -173,15 +174,18 @@ public class Game {
         }
     }
     private void moveDynamite(BlueCard card){
-        int nextPlayer = currentPlayer-1;
+        int nextPlayerIndex = currentPlayer-1;
+        Player nextPlayer;
         while(true){
-            if(players[nextPlayer].isAlive()){
-                players[nextPlayer].activateCard(card);
+            nextPlayer = players[nextPlayerIndex];
+            if(nextPlayer.isAlive()){
+                nextPlayer.activateCard(card);
+                System.out.println("Dynamite was moved to "+ nextPlayer.getName());
                 break;
             }
-            nextPlayer--;
-            if(nextPlayer == -1){
-                nextPlayer = players.length-1;
+            nextPlayerIndex--;
+            if(nextPlayerIndex == -1){
+                nextPlayerIndex = players.length-1;
             }
         }
 
