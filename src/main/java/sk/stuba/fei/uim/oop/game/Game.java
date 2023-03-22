@@ -1,6 +1,9 @@
 package sk.stuba.fei.uim.oop.game;
 
 import sk.stuba.fei.uim.oop.cards.Card;
+import sk.stuba.fei.uim.oop.cards.blue.BlueCard;
+import sk.stuba.fei.uim.oop.cards.blue.Dynamite;
+import sk.stuba.fei.uim.oop.cards.blue.Prison;
 import sk.stuba.fei.uim.oop.table.Table;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 import sk.stuba.fei.uim.oop.player.Player;
@@ -107,6 +110,7 @@ public class Game {
         }
     }
 
+
     private int chooseCard(List<Card> cards, String verb){
         int choosedCardIndex = 0;
         while(true){
@@ -152,6 +156,47 @@ public class Game {
         }
         return playersAlive;
     }
+
+    private void checkDynamite(Player playerOnTurn){
+        for(BlueCard card : playerOnTurn.getActiveBlueCards()){
+            if(card instanceof Dynamite){
+                if(card.checkEffect()) {
+                    ((Dynamite) card).explode(playerOnTurn);
+                }
+                else {
+                    moveDynamite(card);
+                    playerOnTurn.removeCardFromActive(card);
+                }
+               return;
+            }
+        }
+    }
+    private void moveDynamite(BlueCard card){
+        int nextPlayer = currentPlayer-1;
+        while(true){
+            if(players[nextPlayer].isAlive()){
+                players[nextPlayer].activateCard(card);
+                break;
+            }
+            nextPlayer--;
+            if(nextPlayer == -1){
+                nextPlayer = players.length-1;
+            }
+        }
+
+    }
+
+    private boolean checkPrison(Player player){
+        for(BlueCard card : player.getActiveBlueCards()){
+            if(card instanceof Prison){
+                player.removeCardFromActive(card);
+                table.discardCard(card);
+                return card.checkEffect();
+            }
+        }
+        return false;
+    }
+
     private int getNumberOfPlayersAlive(){
         int count = 0;
         for(Player player : this.players){

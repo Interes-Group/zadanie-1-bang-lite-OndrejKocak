@@ -1,11 +1,12 @@
-package sk.stuba.fei.uim.oop.cards;
+package sk.stuba.fei.uim.oop.cards.brown;
 
+import sk.stuba.fei.uim.oop.cards.brown.BrownCard;
 import sk.stuba.fei.uim.oop.player.Player;
 import sk.stuba.fei.uim.oop.table.Table;
 
 import java.util.List;
 
-public class Beer extends BrownCard{
+public class Beer extends BrownCard {
     private static final String CARD_NAME = "Beer";
     public Beer(){
         super(CARD_NAME);

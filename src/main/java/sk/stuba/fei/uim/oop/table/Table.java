@@ -1,6 +1,9 @@
 package sk.stuba.fei.uim.oop.table;
 
 import sk.stuba.fei.uim.oop.cards.*;
+import sk.stuba.fei.uim.oop.cards.blue.Barrel;
+import sk.stuba.fei.uim.oop.cards.blue.Prison;
+import sk.stuba.fei.uim.oop.cards.brown.*;
 import sk.stuba.fei.uim.oop.player.Player;
 
 import java.util.ArrayList;
@@ -39,6 +42,9 @@ public class Table {
         }
         for(int i = 0; i < 2; i++){
             this.deck.add(new Barrel());
+        }
+        for(int i = 0; i < 3; i++){
+            this.deck.add(new Prison());
         }
         Collections.shuffle(this.deck);
     }

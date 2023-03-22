@@ -1,5 +1,6 @@
 package sk.stuba.fei.uim.oop.cards;
 
+import sk.stuba.fei.uim.oop.cards.brown.CatBalou;
 import sk.stuba.fei.uim.oop.player.Player;
 import sk.stuba.fei.uim.oop.table.Table;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
@@ -20,17 +21,17 @@ public abstract class Card {
         System.out.println("Player " + playerOnTurn.getName() + " played card: " + this.name);
     }
 
-    protected final Player selectTarget(Player playerOnTurn, List<Player> enemies){
+    protected final Player selectTarget(List<Player> enemies){
         int targetIndex = 0;
         System.out.println("Available targets: ");
         for(int i = 0; i < enemies.size(); i++){
             Player player = enemies.get(i);
-            if(this instanceof Bang){
-                System.out.println("("+(i+1)+") " + player.getName() + "  lives: " + player.getLives());
-            } else if (this instanceof CatBalou) {
+            if(this instanceof CatBalou){
                 System.out.println("("+(i+1)+") " + player.getName());
                 System.out.println("--> Hand: "+ player.getCardsInHand().size());
                 System.out.println("--> Active blue cards: " + player.getActiveBlueCards().size());
+            } else {
+                System.out.println("("+(i+1)+") " + player.getName() + "  lives: " + player.getLives());
             }
 
         }

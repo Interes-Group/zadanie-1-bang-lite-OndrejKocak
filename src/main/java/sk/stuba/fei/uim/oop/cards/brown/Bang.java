@@ -1,11 +1,14 @@
-package sk.stuba.fei.uim.oop.cards;
+package sk.stuba.fei.uim.oop.cards.brown;
 
+import sk.stuba.fei.uim.oop.cards.blue.Barrel;
+import sk.stuba.fei.uim.oop.cards.Card;
+import sk.stuba.fei.uim.oop.cards.blue.BlueCard;
 import sk.stuba.fei.uim.oop.player.Player;
 import sk.stuba.fei.uim.oop.table.Table;
 
 import java.util.List;
 
-public class Bang extends BrownCard{
+public class Bang extends BrownCard {
     private static final String CARD_NAME = "Bang";
     public Bang() {
         super(CARD_NAME);
@@ -14,7 +17,7 @@ public class Bang extends BrownCard{
     @Override
     public void play(Player playerOnTurn, List<Player> enemies, Table table) {
         super.play(playerOnTurn, enemies, table);
-        Player target = super.selectTarget(playerOnTurn, enemies);
+        Player target = super.selectTarget(enemies);
         for(BlueCard card : target.getActiveBlueCards()){
             if(card instanceof Barrel){
                 if(card.checkEffect()){

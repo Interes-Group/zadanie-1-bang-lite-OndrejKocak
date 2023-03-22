@@ -1,11 +1,13 @@
-package sk.stuba.fei.uim.oop.cards;
+package sk.stuba.fei.uim.oop.cards.brown;
 
+import sk.stuba.fei.uim.oop.cards.Card;
+import sk.stuba.fei.uim.oop.cards.brown.BrownCard;
 import sk.stuba.fei.uim.oop.player.Player;
 import sk.stuba.fei.uim.oop.table.Table;
 
 import java.util.List;
 
-public class Stagecoach extends BrownCard{
+public class Stagecoach extends BrownCard {
     private static final String CARD_NAME="Stagecoach";
 
     public Stagecoach() {

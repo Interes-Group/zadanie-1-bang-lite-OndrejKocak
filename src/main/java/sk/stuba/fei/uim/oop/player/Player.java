@@ -1,6 +1,6 @@
 package sk.stuba.fei.uim.oop.player;
 
-import sk.stuba.fei.uim.oop.cards.BlueCard;
+import sk.stuba.fei.uim.oop.cards.blue.BlueCard;
 import sk.stuba.fei.uim.oop.cards.Card;
 
 import java.util.ArrayList;
@@ -32,6 +32,13 @@ public class Player {
 
     public  void removeLive(){
         this.lives--;
+    }
+
+    public void removeLive(int n){
+        this.lives -= n;
+        if(lives < 0){
+            lives = 0;
+        }
     }
 
     public boolean isAlive(){

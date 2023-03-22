@@ -1,5 +1,7 @@
-package sk.stuba.fei.uim.oop.cards;
+package sk.stuba.fei.uim.oop.cards.brown;
 
+import sk.stuba.fei.uim.oop.cards.Card;
+import sk.stuba.fei.uim.oop.cards.brown.BrownCard;
 import sk.stuba.fei.uim.oop.player.Player;
 import sk.stuba.fei.uim.oop.table.Table;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
@@ -7,7 +9,7 @@ import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 import java.util.List;
 import java.util.Random;
 
-public class CatBalou extends BrownCard{
+public class CatBalou extends BrownCard {
     private static final String CARD_NAME="Cat Balou";
     private Random random;
     public CatBalou() {
@@ -19,7 +21,7 @@ public class CatBalou extends BrownCard{
     public void play(Player playerOnTurn, List<Player> enemies, Table table) {
         super.play(playerOnTurn, enemies, table);
         this.filterEnemiesWithoutCards(enemies);
-        Player target = super.selectTarget(playerOnTurn, enemies);
+        Player target = super.selectTarget(enemies);
         int cardInHand = target.getNumberOfCardsHand();
         int activeBlueCards = target.getNumberOfCardsActiveBlueCards();
         if(cardInHand > 0 & activeBlueCards > 0){
