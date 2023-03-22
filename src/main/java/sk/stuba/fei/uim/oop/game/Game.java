@@ -21,7 +21,7 @@ public class Game {
         while(true){
             numberOfPlayers = KeyboardInput.readInt("Enter the number of players (2-4)");
 
-            if((numberOfPlayers >= 2) & (numberOfPlayers <= 4)){
+            if((numberOfPlayers >= 2) && (numberOfPlayers <= 4)){
                 break;
             }
             else{
@@ -45,7 +45,7 @@ public class Game {
             this.printSpacer();
             Player playerOnTurn = this.players[currentPlayer];
             checkDynamite(playerOnTurn);
-            if(playerOnTurn.isAlive() && !checkPrison(playerOnTurn)){
+            if(playerOnTurn.isAlive() && checkPrison(playerOnTurn)){
                 System.out.println("Player " + playerOnTurn.getName() + " is starting his/her turn.");
                 this.makeTurn(playerOnTurn);
             }
@@ -60,7 +60,7 @@ public class Game {
         playerOnTurn.takeCards(table.drawCards(2));
         System.out.println("Lives: "+ playerOnTurn.getLives());
         int numberOfPlayableCards = playerOnTurn.getNumberOfPlayableCards(this.getEnemies(playerOnTurn));
-        while(numberOfPlayableCards > 0 & this.getNumberOfPlayersAlive() > 1){
+        while(numberOfPlayableCards > 0 && this.getNumberOfPlayersAlive() > 1){
             System.out.println("Cards in "+ playerOnTurn.getName() + "'s hand:");
             this.printCards(playerOnTurn.getCardsInHand(), false);
             this.printSpacer();
@@ -98,7 +98,7 @@ public class Game {
     }
 
     private void discardCard(Player playerOnTurn){
-        int choosedCardIndex = 0;
+        int choosedCardIndex;
         List<Card> cardsOnHand = playerOnTurn.getCardsInHand();
         while(playerOnTurn.getCardsInHand().size() > playerOnTurn.getLives()){
             this.printSpacer();
@@ -112,7 +112,7 @@ public class Game {
 
 
     private int chooseCard(List<Card> cards, String verb){
-        int choosedCardIndex = 0;
+        int choosedCardIndex;
         while(true){
             System.out.println("You can "+ verb + " this cards: ");
             printCards(cards, true);
@@ -148,7 +148,7 @@ public class Game {
     }
 
     private List<Player> getEnemies(Player playerOnTurn){
-        List<Player> playersAlive = new ArrayList<Player>();
+        List<Player> playersAlive = new ArrayList<>();
         for(Player player : this.players){
             if(player.isAlive() & !player.equals(playerOnTurn)){
                 playersAlive.add(player);
@@ -177,6 +177,10 @@ public class Game {
         int nextPlayerIndex = currentPlayer-1;
         Player nextPlayer;
         while(true){
+            if(nextPlayerIndex == -1){
+                nextPlayerIndex = players.length-1;
+            }
+
             nextPlayer = players[nextPlayerIndex];
             if(nextPlayer.isAlive()){
                 nextPlayer.activateCard(card);
@@ -184,9 +188,7 @@ public class Game {
                 break;
             }
             nextPlayerIndex--;
-            if(nextPlayerIndex == -1){
-                nextPlayerIndex = players.length-1;
-            }
+
         }
 
     }
@@ -196,11 +198,17 @@ public class Game {
             if(card instanceof Prison){
                 player.removeCardFromActive(card);
                 table.discardCard(card);
-                System.out.println("Player "+ player.getName() + "is in prison his turn will be skipped.");
-                return card.checkEffect();
+                if(card.checkEffect()){
+                    System.out.println("You escaped the prison your turn will start.");
+                    return true;
+                }
+                else {
+                    System.out.println("Player "+ player.getName() + " is in prison his/her turn will be skipped.");
+                    return false;
+                }
             }
         }
-        return false;
+        return true;
     }
 
     private int getNumberOfPlayersAlive(){
