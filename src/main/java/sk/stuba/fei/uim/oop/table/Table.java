@@ -11,8 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Table {
-    private ArrayList<Card> deck = new ArrayList<Card>();
-    private ArrayList<Card> discardedDeck = new ArrayList<Card>();
+    private ArrayList<Card> deck = new ArrayList<>();
+    private ArrayList<Card> discardedDeck = new ArrayList<>();
 
     public Table(Player[] players) {
         this.createDeck();
@@ -50,7 +50,7 @@ public class Table {
     }
 
     public List<Card> drawCards(int n){
-        List<Card> cards = new ArrayList<Card>();
+        List<Card> cards = new ArrayList<>();
         for(int i = 0; i < n;i++) {
             if (deck.size() == 0) {
                 swapDecks();
