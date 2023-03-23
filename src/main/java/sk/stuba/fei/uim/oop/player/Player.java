@@ -34,8 +34,8 @@ public class Player {
         this.lives--;
     }
 
-    public void removeLive(int n){
-        this.lives -= n;
+    public void removeLive(int numberOfLives){
+        this.lives -= numberOfLives;
         if(lives < 0){
             lives = 0;
         }
@@ -83,7 +83,7 @@ public class Player {
     public int getNumberOfCardsHand(){
         return cardsInHand.size();
     }
-    public int getNumberOfCardsActiveBlueCards(){
+    public int getNumberOfCardsInFront(){
         return cardsInFront.size();
     }
 

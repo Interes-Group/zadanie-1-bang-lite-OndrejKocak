@@ -23,7 +23,7 @@ public class CatBalou extends BrownCard {
         this.filterEnemiesWithoutCards(enemies);
         Player target = super.selectTarget(enemies);
         int cardInHand = target.getNumberOfCardsHand();
-        int activeBlueCards = target.getNumberOfCardsActiveBlueCards();
+        int activeBlueCards = target.getNumberOfCardsInFront();
         if(cardInHand > 0 & activeBlueCards > 0){
             int select;
             while(true){
@@ -50,7 +50,7 @@ public class CatBalou extends BrownCard {
 
     private void filterEnemiesWithoutCards(List<Player> enemies){
         for(Player player : enemies){
-            if(player.getNumberOfCardsHand() == 0 & player.getNumberOfCardsActiveBlueCards() == 0){
+            if(player.getNumberOfCardsHand() == 0 & player.getNumberOfCardsInFront() == 0){
                 System.out.println("You cannot play Cat Balou on "+player.getName()+" because he/she doesn't have any cards.");
                 enemies.remove(player);
             }
