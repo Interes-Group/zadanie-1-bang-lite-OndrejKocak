@@ -12,11 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private final Player[] players;
-    private final Table table;
+    private Player[] players;
+    private Table table;
     private int currentPlayer;
     public Game() {
         System.out.println("===== Welcome to BANG! =====");
+        this.initPlayers();
+        this.printSpacer();
+        this.startGame();
+    }
+
+    private void initPlayers(){
         int numberOfPlayers;
         while(true){
             numberOfPlayers = KeyboardInput.readInt("Enter the number of players (2-4)");
@@ -35,10 +41,7 @@ public class Game {
             this.players[i] = new Player(playerName);
         }
         this.table = new Table(this.players);
-        this.printSpacer();
-        this.startGame();
     }
-
     private void startGame(){
         System.out.println("============= Game started =============");
         while(this.getNumberOfPlayersAlive() > 1){
@@ -55,6 +58,7 @@ public class Game {
         System.out.println("Everyone died. Except " + winner.getName() + " who now dominates wild west.");
 
     }
+
 
     private void makeTurn(Player playerOnTurn){
         playerOnTurn.takeCards(table.drawCards(2));
