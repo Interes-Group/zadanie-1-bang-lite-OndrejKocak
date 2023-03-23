@@ -60,20 +60,22 @@ public class CatBalou extends BrownCard {
 
     private Card chooseCard(Player target, int select){
         int cardIndex;
-        Card card;
         if(select == 1){
+            Card card;
             cardIndex = random.nextInt(target.getCardsInHand().size());
             card = target.getCardsInHand().get(cardIndex);
             target.removeCardFromHand(card);
             System.out.println("Card " + card.getName() +" was discarded from "+ target.getName() + "'s hand");
+            return card;
         }
         else {
+            BlueCard card;
             cardIndex = random.nextInt(target.getCardsInFront().size());
             card = target.getCardsInFront().get(cardIndex);
-            target.removeCardFromInFront((BlueCard) card);
+            target.removeCardFromInFront(card);
             System.out.println("Card " + card.getName() +" was discarded from "+ target.getName() + "'s active cards");
+            return card;
         }
-        return card;
     }
 
     @Override
