@@ -12,8 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Table {
-    private ArrayList<Card> deck = new ArrayList<>();
-    private ArrayList<Card> discardedDeck = new ArrayList<>();
+    private final ArrayList<Card> deck = new ArrayList<>();
+    private final ArrayList<Card> discardedDeck = new ArrayList<>();
 
     public Table(Player[] players) {
         this.createDeck();
@@ -66,9 +66,8 @@ public class Table {
     }
 
     private void swapDecks(){
-        ArrayList<Card> temp = this.discardedDeck;
-        this.discardedDeck = this.deck;
-        this.deck = temp;
+        this.deck.addAll(discardedDeck);
+        this.discardedDeck.clear();
         Collections.shuffle(this.deck);
     }
 }
