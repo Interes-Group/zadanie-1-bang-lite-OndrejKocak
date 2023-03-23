@@ -22,7 +22,7 @@ public class Prison extends BlueCard {
 
     private void filterEnemiesWithPrison(List<Player> enemies){
         for(Player enemy : enemies){
-            for(BlueCard card: enemy.getActiveBlueCards()){
+            for(BlueCard card: enemy.getCardsInFront()){
                 if(card instanceof Prison){
                     System.out.println("You cannot use prison on player "+enemy.getName() + " because he/she has prison already active.");
                     enemies.remove(enemy);
@@ -32,10 +32,10 @@ public class Prison extends BlueCard {
     }
 
     @Override
-    public boolean isPlayable(Player currentPlayer, List<Player> enemies) {
+    public boolean isPlayable(Player playerOnTurn, List<Player> enemies) {
         for(Player enemy : enemies){
             boolean hasPrison = false;
-            for(Card card : enemy.getActiveBlueCards()){
+            for(Card card : enemy.getCardsInFront()){
                 if(card instanceof Prison){
                     hasPrison = true;
                     break;

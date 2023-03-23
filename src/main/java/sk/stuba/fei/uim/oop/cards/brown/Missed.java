@@ -12,7 +12,7 @@ public class Missed extends Card {
     }
 
     @Override
-    public boolean isPlayable(Player currentPlayer, List<Player> enemies) {
+    public boolean isPlayable(Player playerOnTurn, List<Player> enemies) {
         return false;
     }
 }

@@ -9,13 +9,13 @@ import java.util.List;
 public class Player {
     private final String name;
     private final List<Card> cardsInHand;
-    private  final List<BlueCard> activeBlueCards;
+    private  final List<BlueCard> cardsInFront;
     private int lives;
     public Player(String name) {
         this.name = name;
         this.lives = 4;
         this.cardsInHand = new ArrayList<>();
-        this.activeBlueCards = new ArrayList<>();
+        this.cardsInFront = new ArrayList<>();
     }
 
     public String getName() {
@@ -50,20 +50,17 @@ public class Player {
     }
 
     public void activateCard(BlueCard card){
-        activeBlueCards.add(card);
+        cardsInFront.add(card);
     }
 
-    public void removeCardFromActive(BlueCard card){
-        activeBlueCards.remove(card);
+    public void removeCardFromInFront(BlueCard card){
+        cardsInFront.remove(card);
     }
 
     public void removeCardFromHand(Card card){
         cardsInHand.remove(card);
     }
 
-    public void removeCardFromActiveBlueCards(BlueCard card){
-        activeBlueCards.remove(card);
-    }
 
     public List<Card> getPlayableCards(List<Player> enemies){
         List<Card> playableCards = new ArrayList<>();
@@ -79,15 +76,15 @@ public class Player {
         return cardsInHand;
     }
 
-    public List<BlueCard> getActiveBlueCards() {
-        return activeBlueCards;
+    public List<BlueCard> getCardsInFront() {
+        return cardsInFront;
     }
 
     public int getNumberOfCardsHand(){
         return cardsInHand.size();
     }
     public int getNumberOfCardsActiveBlueCards(){
-        return activeBlueCards.size();
+        return cardsInFront.size();
     }
 
     public int getNumberOfPlayableCards(List<Player> enemies){
@@ -97,8 +94,8 @@ public class Player {
     public List<Card> die(){
         List<Card> allCards = new ArrayList<>(cardsInHand);
         cardsInHand.clear();
-        allCards.addAll(activeBlueCards);
-        activeBlueCards.clear();
+        allCards.addAll(cardsInFront);
+        cardsInFront.clear();
         return allCards;
     }
 }

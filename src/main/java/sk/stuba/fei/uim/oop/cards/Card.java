@@ -29,7 +29,7 @@ public abstract class Card {
             if(this instanceof CatBalou){
                 System.out.println("("+(i+1)+") " + player.getName());
                 System.out.println("--> Hand: "+ player.getCardsInHand().size());
-                System.out.println("--> Active blue cards: " + player.getActiveBlueCards().size());
+                System.out.println("--> Active blue cards: " + player.getCardsInFront().size());
             } else {
                 System.out.println("("+(i+1)+") " + player.getName() + "  lives: " + player.getLives());
             }
@@ -55,7 +55,7 @@ public abstract class Card {
         }
     }
 
-    public boolean isPlayable(Player currentPlayer, List<Player> enemies){
+    public boolean isPlayable(Player playerOnTurn, List<Player> enemies){
         return true;
     }
 

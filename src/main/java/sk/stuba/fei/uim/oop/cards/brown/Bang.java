@@ -18,12 +18,13 @@ public class Bang extends BrownCard {
     public void play(Player playerOnTurn, List<Player> enemies, Table table) {
         super.play(playerOnTurn, enemies, table);
         Player target = super.selectTarget(enemies);
-        for(BlueCard card : target.getActiveBlueCards()){
+        for(BlueCard card : target.getCardsInFront()){
             if(card instanceof Barrel){
                 if(card.checkEffect()){
                     System.out.println("Player "+target.getName()+" avoided shot with Barrel");
-                    target.removeCardFromActive(card);
+                    target.removeCardFromInFront(card);
                     table.discardCard(card);
+                    return;
                 }
                 else {
                     System.out.println("Barrel wasn't activated.");

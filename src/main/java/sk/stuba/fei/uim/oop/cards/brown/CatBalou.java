@@ -68,18 +68,18 @@ public class CatBalou extends BrownCard {
             System.out.println("Card " + card.getName() +" was discarded from "+ target.getName() + "'s hand");
         }
         else {
-            cardIndex = random.nextInt(target.getActiveBlueCards().size());
-            card = target.getActiveBlueCards().get(cardIndex);
-            target.removeCardFromActiveBlueCards((BlueCard) card);
+            cardIndex = random.nextInt(target.getCardsInFront().size());
+            card = target.getCardsInFront().get(cardIndex);
+            target.removeCardFromInFront((BlueCard) card);
             System.out.println("Card " + card.getName() +" was discarded from "+ target.getName() + "'s active cards");
         }
         return card;
     }
 
     @Override
-    public boolean isPlayable(Player currentPlayer, List<Player> enemies) {
+    public boolean isPlayable(Player playerOnTurn, List<Player> enemies) {
         for(Player player : enemies){
-            if(player.getCardsInHand().size() > 0 | player.getActiveBlueCards().size() > 0){
+            if(player.getCardsInHand().size() > 0 | player.getCardsInFront().size() > 0){
                 return true;
             }
         }

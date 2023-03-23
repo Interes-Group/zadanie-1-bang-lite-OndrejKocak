@@ -61,6 +61,8 @@ public class Game {
         System.out.println("Lives: "+ playerOnTurn.getLives());
         int numberOfPlayableCards = playerOnTurn.getNumberOfPlayableCards(this.getEnemies(playerOnTurn));
         while(numberOfPlayableCards > 0 && this.getNumberOfPlayersAlive() > 1){
+            System.out.println("Cards in front of "+ playerOnTurn.getName()+":");
+            this.printCards(playerOnTurn.getCardsInFront());
             System.out.println("Cards in "+ playerOnTurn.getName() + "'s hand:");
             this.printCards(playerOnTurn.getCardsInHand(), false);
             this.printSpacer();
@@ -92,6 +94,9 @@ public class Game {
         List<Card> playableCards = playerOnTurn.getPlayableCards(getEnemies(playerOnTurn));
         int choosedCardIndex = this.chooseCard(playableCards, "play");
         this.printSpacer();
+        if(choosedCardIndex == -1){
+            return;
+        }
         Card choosedCard = playableCards.get(choosedCardIndex);
         playerOnTurn.removeCardFromHand(choosedCard);
         choosedCard.play(playerOnTurn, this.getEnemies(playerOnTurn), this.table);
@@ -119,7 +124,7 @@ public class Game {
             if(verb.equals("play")){
                 System.out.println("(0) Cancel play");
             }
-            choosedCardIndex = KeyboardInput.readInt("Enter the number of card you want to play");
+            choosedCardIndex = KeyboardInput.readInt("Enter the number of card you want to "+ verb);
             if((choosedCardIndex < 0) | (choosedCardIndex > cards.size())){
                 System.out.println("You entered wrong number! Please try again");
             } else{
@@ -143,6 +148,15 @@ public class Game {
         }
     }
 
+    private void printCards(List<BlueCard> cards){
+        if(cards.size() == 0){
+            System.out.println("--> NONE");
+        }
+        for(BlueCard card: cards){
+            System.out.println("--> " + card.getName());
+        }
+    }
+
     private void printSpacer(){
         System.out.println("========================================");
     }
@@ -159,16 +173,17 @@ public class Game {
 
 
     private void checkDynamite(Player playerOnTurn){
-        for(BlueCard card : playerOnTurn.getActiveBlueCards()){
+        for(BlueCard card : playerOnTurn.getCardsInFront()){
             if(card instanceof Dynamite){
                 if(card.checkEffect()) {
                     ((Dynamite) card).explode(playerOnTurn);
+                    table.discardCard(card);
                 }
                 else {
                     System.out.println("Dynamite didn't exploded.");
                     moveDynamite(card);
-                    playerOnTurn.removeCardFromActive(card);
                 }
+                playerOnTurn.removeCardFromInFront(card);
                return;
             }
         }
@@ -193,17 +208,17 @@ public class Game {
 
     }
 
-    private boolean checkPrison(Player player){
-        for(BlueCard card : player.getActiveBlueCards()){
+    private boolean checkPrison(Player playerOnTurn){
+        for(BlueCard card : playerOnTurn.getCardsInFront()){
             if(card instanceof Prison){
-                player.removeCardFromActive(card);
+                playerOnTurn.removeCardFromInFront(card);
                 table.discardCard(card);
                 if(card.checkEffect()){
                     System.out.println("You escaped the prison your turn will start.");
                     return true;
                 }
                 else {
-                    System.out.println("Player "+ player.getName() + " is in prison his/her turn will be skipped.");
+                    System.out.println("Player "+ playerOnTurn.getName() + " is in prison his/her turn will be skipped.");
                     return false;
                 }
             }
