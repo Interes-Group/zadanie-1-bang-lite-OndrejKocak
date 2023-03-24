@@ -46,7 +46,6 @@ public class Prison extends BlueCard {
                 return true;
             }
         }
-        System.out.println(this.name + " is not playable.Every enemy has prison if front of him.");
         return false;
     }
 }

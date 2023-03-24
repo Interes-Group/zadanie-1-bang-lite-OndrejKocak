@@ -18,17 +18,13 @@ public class Stagecoach extends BrownCard {
     @Override
     public void play(Player playerOnTurn, List<Player> enemies) {
         super.play(playerOnTurn, enemies);
-        List<Card> drawnCards = this.decks.drawCards(numberOfCardsToDraw);
+        List<Card> drawnCards = this.decks.drawCards(this.numberOfCardsToDraw);
         playerOnTurn.takeCards(drawnCards);
-        System.out.println("Player " + playerOnTurn.getName() + " drawn "+numberOfCardsToDraw+" cards.");
+        System.out.println("Player " + playerOnTurn.getName() + " drawn "+this.numberOfCardsToDraw+" cards.");
     }
 
     @Override
     public boolean isPlayable(Player playerOnTurn, List<Player> enemies) {
-        if(decks.getNumberOfAvailableCards() < numberOfCardsToDraw){
-            System.out.println(this.name + " is not playable because there is not enough cards in the deck.");
-            return false;
-        }
-        return true;
+        return decks.getNumberOfAvailableCards() >= this.numberOfCardsToDraw;
     }
 }

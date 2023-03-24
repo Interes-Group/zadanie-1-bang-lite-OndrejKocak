@@ -22,30 +22,7 @@ public class CatBalou extends BrownCard {
         super.play(playerOnTurn, enemies);
         this.filterEnemiesWithoutCards(enemies);
         Player target = super.selectTarget(enemies);
-        int numberOfCardInHand = target.getNumberOfCardsHand();
-        int numberOfCardsInFront = target.getNumberOfCardsInFront();
-        if(numberOfCardInHand > 0 & numberOfCardsInFront > 0){
-            int select;
-            while(true){
-                System.out.println("Select from where you want to discard card: ");
-                System.out.println("(1) Hand: " + numberOfCardInHand + " cards");
-                System.out.println("(2) Active blue cards: " + numberOfCardsInFront + " cards");
-                select = KeyboardInput.readInt();
-                if(select == 1 | select == 2){
-                    this.decks.discardCard(chooseCard(target, select));
-                    break;
-                } else{
-                    System.out.println("You entered wrong number. Please try again");
-                }
-            }
-        } else if (numberOfCardInHand > 0) {
-            System.out.println("Player "+target.getName()+" dont have any active blueCards. Card will be chosen from his hand");
-            this.decks.discardCard(chooseCard(target, 1));
-        }
-        else {
-            System.out.println("Player "+target.getName()+" dont have any cards in hand. Card will be chosen from his active cards");
-            this.decks.discardCard(chooseCard(target, 2));
-        }
+        this.decks.discardCard(chooseCard(target, selectCardSource(target)));
     }
 
     private void filterEnemiesWithoutCards(List<Player> enemies){
@@ -55,6 +32,32 @@ public class CatBalou extends BrownCard {
                 enemies.remove(player);
             }
         }
+    }
+
+    private int selectCardSource(Player target){
+        int numberOfCardInHand = target.getNumberOfCardsHand();
+        int numberOfCardsInFront = target.getNumberOfCardsInFront();
+        int select = 0;
+        if(numberOfCardInHand > 0 & numberOfCardsInFront > 0){
+            while(select != 1 && select!=2){
+                System.out.println("Select from where you want to discard card: ");
+                System.out.println("(1) Hand: " + numberOfCardInHand + " cards");
+                System.out.println("(2) Cards in front: " + numberOfCardsInFront + " cards");
+                select = KeyboardInput.readInt();
+                if(select != 1 && select != 2){
+
+                    System.out.println("You entered invalid number. Please try again.");
+                }
+            }
+        } else if (numberOfCardInHand > 0) {
+            System.out.println("Player "+target.getName()+" dont have any active blueCards. Card will be chosen from his hand.");
+            select = 1;
+        }
+        else {
+            System.out.println("Player "+target.getName()+" dont have any cards in hand. Card will be chosen from cards in front.");
+            select = 2;
+        }
+        return select;
     }
 
 
@@ -85,7 +88,6 @@ public class CatBalou extends BrownCard {
                 return true;
             }
         }
-        System.out.println(this.name + " is not playable because your enemies don't have any cards.");
         return false;
     }
 

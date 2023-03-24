@@ -27,7 +27,6 @@ public class Dynamite extends BlueCard{
     public boolean isPlayable(Player playerOnTurn, List<Player> enemies) {
        for(Card card : playerOnTurn.getCardsInFront()){
            if(card instanceof Dynamite){
-               System.out.println(this.name + " is not playable. You already have one in front of you.");
                return false;
            }
        }

@@ -9,7 +9,7 @@ import java.util.Random;
 
 public abstract class BlueCard extends Card {
     protected Random random;
-    protected int bound;
+    private final int  bound;
     public BlueCard(String name, int bound) {
         super(name);
         random = new Random();
