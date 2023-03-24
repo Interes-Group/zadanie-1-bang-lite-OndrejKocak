@@ -180,7 +180,7 @@ public class Game {
         for(BlueCard card : playerOnTurn.getCardsInFront()){
             if(card instanceof Dynamite){
                 if(card.checkEffect()) {
-                    ((Dynamite) card).explode(playerOnTurn);
+                    ((Dynamite) card).explode(playerOnTurn, this.decks);
                     decks.discardCard(card);
                 }
                 else {

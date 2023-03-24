@@ -1,6 +1,7 @@
 package sk.stuba.fei.uim.oop.cards.blue;
 
 import sk.stuba.fei.uim.oop.cards.Card;
+import sk.stuba.fei.uim.oop.decks.Decks;
 import sk.stuba.fei.uim.oop.player.Player;
 
 import java.util.List;
@@ -14,12 +15,10 @@ public class Dynamite extends BlueCard{
 
 
 
-    public void explode(Player player){
+    public void explode(Player player, Decks decks){
         System.out.println("Dynamite exploded in "+player.getName()+"'s hands.");
         player.removeLive(3);
-        if (!player.isAlive()) {
-            player.die();
-        }
+        checkKill(player, decks);
     }
 
     @Override
