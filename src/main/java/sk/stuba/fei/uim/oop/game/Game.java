@@ -49,7 +49,6 @@ public class Game {
             Player playerOnTurn = this.players[currentPlayer];
             checkDynamite(playerOnTurn);
             if(playerOnTurn.isAlive() && checkPrison(playerOnTurn)){
-                System.out.println("Player " + playerOnTurn.getName() + " is starting his/her turn.");
                 this.makeTurn(playerOnTurn);
             }
             incrementCounter();
@@ -61,18 +60,13 @@ public class Game {
 
 
     private void makeTurn(Player playerOnTurn){
+        System.out.println("Player " + playerOnTurn.getName() + " is starting his/her turn.");
         playerOnTurn.takeCards(decks.drawCards(2));
-        System.out.println("Lives: "+ playerOnTurn.getLives());
+
         int numberOfPlayableCards = playerOnTurn.getNumberOfPlayableCards(this.getEnemies(playerOnTurn));
         while(numberOfPlayableCards > 0 && this.getNumberOfPlayersAlive() > 1){
-            System.out.println("Cards in front of "+ playerOnTurn.getName()+":");
-            this.printCards(playerOnTurn.getCardsInFront());
-            System.out.println("Cards in "+ playerOnTurn.getName() + "'s hand:");
-            this.printCards(playerOnTurn.getCardsInHand(), false);
-            this.printSpacer();
-            System.out.println("Do you want continue your turn?");
-            System.out.println("(1) Play the card");
-            System.out.println("(0) End turn");
+            this.printTurnInfo(playerOnTurn);
+
             int continueTurn = KeyboardInput.readInt();
 
             if(continueTurn == 1){
@@ -92,6 +86,20 @@ public class Game {
         if(numberOfPlayableCards == 0){
             System.out.println("You don't have any more playable cards. Your turn is ending.");
         }
+        printSpacer();
+    }
+
+    private void printTurnInfo(Player playerOnTurn){
+        System.out.println("Lives: "+ playerOnTurn.getLives());
+        System.out.println("Cards in front of "+ playerOnTurn.getName()+":");
+        this.printCards(playerOnTurn.getCardsInFront());
+        System.out.println("Cards in "+ playerOnTurn.getName() + "'s hand:");
+        this.printCards(playerOnTurn.getCardsInHand(), false);
+
+        this.printSpacer();
+        System.out.println("Do you want continue your turn?");
+        System.out.println("(1) Play the card");
+        System.out.println("(0) End turn");
     }
 
     private void playCard(Player playerOnTurn){
@@ -107,7 +115,7 @@ public class Game {
     }
 
     private void discardCard(Player playerOnTurn){
-        int choosedCardIndex;
+        int choosedCardIndex = 0;
         List<Card> cardsOnHand = playerOnTurn.getCardsInHand();
         while(playerOnTurn.getCardsInHand().size() > playerOnTurn.getLives()){
             this.printSpacer();
@@ -121,7 +129,7 @@ public class Game {
 
 
     private int chooseCard(List<Card> cards, String verb){
-        int choosedCardIndex;
+        int choosedCardIndex = 0;
         while(true){
             System.out.println("You can "+ verb + " this cards: ");
             printCards(cards, true);
@@ -194,7 +202,7 @@ public class Game {
     }
     private void moveDynamite(BlueCard card){
         int nextPlayerIndex = currentPlayer-1;
-        Player nextPlayer;
+        Player nextPlayer = null;
         while(true){
             if(nextPlayerIndex == -1){
                 nextPlayerIndex = players.length-1;
