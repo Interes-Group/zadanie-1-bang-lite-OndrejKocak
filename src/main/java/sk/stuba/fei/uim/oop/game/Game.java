@@ -4,7 +4,7 @@ import sk.stuba.fei.uim.oop.cards.Card;
 import sk.stuba.fei.uim.oop.cards.blue.BlueCard;
 import sk.stuba.fei.uim.oop.cards.blue.Dynamite;
 import sk.stuba.fei.uim.oop.cards.blue.Prison;
-import sk.stuba.fei.uim.oop.table.Table;
+import sk.stuba.fei.uim.oop.decks.Decks;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 import sk.stuba.fei.uim.oop.player.Player;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Game {
     private Player[] players;
-    private Table table;
+    private Decks decks;
     private int currentPlayer;
     public Game() {
         System.out.println("===== Welcome to BANG! =====");
@@ -40,7 +40,7 @@ public class Game {
             String playerName = KeyboardInput.readString("Enter name of player " + (i+1));
             this.players[i] = new Player(playerName);
         }
-        this.table = new Table(this.players);
+        this.decks = new Decks(this.players);
     }
     private void startGame(){
         System.out.println("============= Game started =============");
@@ -61,7 +61,7 @@ public class Game {
 
 
     private void makeTurn(Player playerOnTurn){
-        playerOnTurn.takeCards(table.drawCards(2));
+        playerOnTurn.takeCards(decks.drawCards(2));
         System.out.println("Lives: "+ playerOnTurn.getLives());
         int numberOfPlayableCards = playerOnTurn.getNumberOfPlayableCards(this.getEnemies(playerOnTurn));
         while(numberOfPlayableCards > 0 && this.getNumberOfPlayersAlive() > 1){
@@ -103,7 +103,7 @@ public class Game {
         }
         Card choosedCard = playableCards.get(choosedCardIndex);
         playerOnTurn.removeCardFromHand(choosedCard);
-        choosedCard.play(playerOnTurn, this.getEnemies(playerOnTurn), this.table);
+        choosedCard.play(playerOnTurn, this.getEnemies(playerOnTurn), this.decks);
     }
 
     private void discardCard(Player playerOnTurn){
@@ -115,7 +115,7 @@ public class Game {
             choosedCardIndex = this.chooseCard(cardsOnHand, "discard");
             Card choosedCard = cardsOnHand.get(choosedCardIndex);
             playerOnTurn.removeCardFromHand(choosedCard);
-            this.table.discardCard(choosedCard);
+            this.decks.discardCard(choosedCard);
         }
     }
 
@@ -181,7 +181,7 @@ public class Game {
             if(card instanceof Dynamite){
                 if(card.checkEffect()) {
                     ((Dynamite) card).explode(playerOnTurn);
-                    table.discardCard(card);
+                    decks.discardCard(card);
                 }
                 else {
                     System.out.println("Dynamite didn't exploded.");
@@ -216,7 +216,7 @@ public class Game {
         for(BlueCard card : playerOnTurn.getCardsInFront()){
             if(card instanceof Prison){
                 playerOnTurn.removeCardFromInFront(card);
-                table.discardCard(card);
+                decks.discardCard(card);
                 if(card.checkEffect()){
                     System.out.println("You escaped the prison your turn will start.");
                     return true;

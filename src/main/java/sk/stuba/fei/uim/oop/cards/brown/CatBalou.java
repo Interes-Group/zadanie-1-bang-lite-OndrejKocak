@@ -3,7 +3,7 @@ package sk.stuba.fei.uim.oop.cards.brown;
 import sk.stuba.fei.uim.oop.cards.Card;
 import sk.stuba.fei.uim.oop.cards.blue.BlueCard;
 import sk.stuba.fei.uim.oop.player.Player;
-import sk.stuba.fei.uim.oop.table.Table;
+import sk.stuba.fei.uim.oop.decks.Decks;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 
 import java.util.List;
@@ -18,8 +18,8 @@ public class CatBalou extends BrownCard {
     }
 
     @Override
-    public void play(Player playerOnTurn, List<Player> enemies, Table table) {
-        super.play(playerOnTurn, enemies, table);
+    public void play(Player playerOnTurn, List<Player> enemies, Decks decks) {
+        super.play(playerOnTurn, enemies, decks);
         this.filterEnemiesWithoutCards(enemies);
         Player target = super.selectTarget(enemies);
         int cardInHand = target.getNumberOfCardsHand();
@@ -32,7 +32,7 @@ public class CatBalou extends BrownCard {
                 System.out.println("(2) Active blue cards: " + activeBlueCards + " cards");
                 select = KeyboardInput.readInt();
                 if(select == 1 | select == 2){
-                    table.discardCard(chooseCard(target, select));
+                    decks.discardCard(chooseCard(target, select));
                     break;
                 } else{
                     System.out.println("You entered wrong number. Please try again");
@@ -40,11 +40,11 @@ public class CatBalou extends BrownCard {
             }
         } else if (cardInHand > 0) {
             System.out.println("Player "+target.getName()+" dont have any active blueCards. Card will be chosen from his hand");
-            table.discardCard(chooseCard(target, 1));
+            decks.discardCard(chooseCard(target, 1));
         }
         else {
             System.out.println("Player "+target.getName()+" dont have any cards in hand. Card will be chosen from his active cards");
-            table.discardCard(chooseCard(target, 2));
+            decks.discardCard(chooseCard(target, 2));
         }
     }
 

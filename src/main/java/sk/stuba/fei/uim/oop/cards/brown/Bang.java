@@ -4,7 +4,7 @@ import sk.stuba.fei.uim.oop.cards.blue.Barrel;
 import sk.stuba.fei.uim.oop.cards.Card;
 import sk.stuba.fei.uim.oop.cards.blue.BlueCard;
 import sk.stuba.fei.uim.oop.player.Player;
-import sk.stuba.fei.uim.oop.table.Table;
+import sk.stuba.fei.uim.oop.decks.Decks;
 
 import java.util.List;
 
@@ -15,15 +15,14 @@ public class Bang extends BrownCard {
     }
 
     @Override
-    public void play(Player playerOnTurn, List<Player> enemies, Table table) {
-        super.play(playerOnTurn, enemies, table);
+    public void play(Player playerOnTurn, List<Player> enemies, Decks decks) {
+        super.play(playerOnTurn, enemies, decks);
         Player target = super.selectTarget(enemies);
         for(BlueCard card : target.getCardsInFront()){
             if(card instanceof Barrel){
                 if(card.checkEffect()){
                     System.out.println("Player "+target.getName()+" avoided shot with Barrel");
                     target.removeCardFromInFront(card);
-                    table.discardCard(card);
                     return;
                 }
                 else {
@@ -36,13 +35,13 @@ public class Bang extends BrownCard {
             if(card instanceof Missed){
                 System.out.println("Player "+ target.getName() + " dodged your Bang with Missed.");
                 target.removeCardFromHand(card);
-                table.discardCard(card);
+                decks.discardCard(card);
                 return;
             }
         }
         target.removeLive();
         System.out.println("Player "+ target.getName() + " was shot with Bang and lost 1 live.");
-        super.checkKill(target, table);
+        super.checkKill(target, decks);
     }
 
 }

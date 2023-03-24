@@ -2,20 +2,22 @@ package sk.stuba.fei.uim.oop.cards.blue;
 
 import sk.stuba.fei.uim.oop.cards.Card;
 import sk.stuba.fei.uim.oop.player.Player;
-import sk.stuba.fei.uim.oop.table.Table;
+import sk.stuba.fei.uim.oop.decks.Decks;
 
 import java.util.List;
 
 public class Dynamite extends BlueCard{
     private static final String CARD_NAME = "Dynamite";
+    private static final int BOUND=8;
     public Dynamite() {
-        super(CARD_NAME, 8);
+        super(CARD_NAME, BOUND);
     }
 
     @Override
-    public void play(Player playerOnTurn, List<Player> enemies, Table table) {
-        super.play(playerOnTurn, enemies, table);
+    public void play(Player playerOnTurn, List<Player> enemies, Decks decks) {
+        super.play(playerOnTurn, enemies, decks);
         playerOnTurn.activateCard(this);
+        System.out.println("Dynamite was added in front you.");
     }
 
     public void explode(Player player){

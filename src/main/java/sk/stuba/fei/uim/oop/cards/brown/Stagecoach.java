@@ -1,9 +1,8 @@
 package sk.stuba.fei.uim.oop.cards.brown;
 
 import sk.stuba.fei.uim.oop.cards.Card;
-import sk.stuba.fei.uim.oop.cards.brown.BrownCard;
+import sk.stuba.fei.uim.oop.decks.Decks;
 import sk.stuba.fei.uim.oop.player.Player;
-import sk.stuba.fei.uim.oop.table.Table;
 
 import java.util.List;
 
@@ -15,9 +14,9 @@ public class Stagecoach extends BrownCard {
     }
 
     @Override
-    public void play(Player playerOnTurn, List<Player> enemies, Table table) {
-        super.play(playerOnTurn, enemies, table);
-        List<Card> drawnCards = table.drawCards(2);
+    public void play(Player playerOnTurn, List<Player> enemies, Decks decks) {
+        super.play(playerOnTurn, enemies, decks);
+        List<Card> drawnCards = decks.drawCards(2);
         playerOnTurn.takeCards(drawnCards);
         System.out.println("Player " + playerOnTurn.getName() + " drawn 2 cards.");
     }

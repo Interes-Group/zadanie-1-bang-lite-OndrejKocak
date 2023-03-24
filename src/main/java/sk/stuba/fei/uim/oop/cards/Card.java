@@ -2,7 +2,7 @@ package sk.stuba.fei.uim.oop.cards;
 
 import sk.stuba.fei.uim.oop.cards.brown.CatBalou;
 import sk.stuba.fei.uim.oop.player.Player;
-import sk.stuba.fei.uim.oop.table.Table;
+import sk.stuba.fei.uim.oop.decks.Decks;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public abstract class Card {
     public String getName() {
         return name;
     }
-    public void play(Player playerOnTurn, List<Player> enemies, Table table){
+    public void play(Player playerOnTurn, List<Player> enemies, Decks decks){
         System.out.println("Player " + playerOnTurn.getName() + " played card: " + this.name);
     }
 
@@ -46,10 +46,10 @@ public abstract class Card {
         return enemies.get(targetIndex);
     }
 
-    protected final void checkKill(Player target, Table table){
+    protected final void checkKill(Player target, Decks decks){
         if(!target.isAlive()){
             for (Card card : target.die()){
-                table.discardCard(card);
+                decks.discardCard(card);
             }
             System.out.println("Player "+target.getName()+" died.");
         }

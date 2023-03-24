@@ -1,4 +1,4 @@
-package sk.stuba.fei.uim.oop.table;
+package sk.stuba.fei.uim.oop.decks;
 
 import sk.stuba.fei.uim.oop.cards.*;
 import sk.stuba.fei.uim.oop.cards.blue.Barrel;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Table {
+public class Decks {
     private final ArrayList<Card> deck = new ArrayList<>();
     private final ArrayList<Card> discardedDeck = new ArrayList<>();
 
-    public Table(Player[] players) {
+    public Decks(Player[] players) {
         this.createDeck();
         for(Player player : players){
             player.takeCards(this.drawCards(4));
@@ -51,9 +51,9 @@ public class Table {
         Collections.shuffle(this.deck);
     }
 
-    public List<Card> drawCards(int n){
+    public List<Card> drawCards(int numberOfCards){
         List<Card> cards = new ArrayList<>();
-        for(int i = 0; i < n;i++) {
+        for(int i = 0; i < numberOfCards;i++) {
             if (deck.size() == 0) {
                 swapDecks();
             }
