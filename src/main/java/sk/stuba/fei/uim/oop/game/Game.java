@@ -103,7 +103,7 @@ public class Game {
         }
         Card choosedCard = playableCards.get(choosedCardIndex);
         playerOnTurn.removeCardFromHand(choosedCard);
-        choosedCard.play(playerOnTurn, this.getEnemies(playerOnTurn), this.decks);
+        choosedCard.play(playerOnTurn, this.getEnemies(playerOnTurn));
     }
 
     private void discardCard(Player playerOnTurn){

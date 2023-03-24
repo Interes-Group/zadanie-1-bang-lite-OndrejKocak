@@ -10,19 +10,18 @@ import java.util.List;
 
 public class Bang extends BrownCard {
     private static final String CARD_NAME = "Bang";
-    public Bang() {
-        super(CARD_NAME);
+    public Bang(Decks decks) {
+        super(CARD_NAME, decks);
     }
 
     @Override
-    public void play(Player playerOnTurn, List<Player> enemies, Decks decks) {
-        super.play(playerOnTurn, enemies, decks);
+    public void play(Player playerOnTurn, List<Player> enemies) {
+        super.play(playerOnTurn, enemies);
         Player target = super.selectTarget(enemies);
         for(BlueCard card : target.getCardsInFront()){
             if(card instanceof Barrel){
                 if(card.checkEffect()){
-                    System.out.println("Player "+target.getName()+" avoided shot with Barrel");
-                    target.removeCardFromInFront(card);
+                    System.out.println("Player "+target.getName()+" avoided " + this.name + " with Barrel");
                     return;
                 }
                 else {
@@ -33,15 +32,14 @@ public class Bang extends BrownCard {
         }
         for(Card card : target.getCardsInHand()){
             if(card instanceof Missed){
-                System.out.println("Player "+ target.getName() + " dodged your Bang with Missed.");
                 target.removeCardFromHand(card);
-                decks.discardCard(card);
+                card.play(playerOnTurn, enemies);
                 return;
             }
         }
         target.removeLive();
-        System.out.println("Player "+ target.getName() + " was shot with Bang and lost 1 live.");
-        super.checkKill(target, decks);
+        System.out.println("Player "+ target.getName() + " was shot with "+this.name+" and lost 1 live.");
+        super.checkKill(target, this.decks);
     }
 
 }

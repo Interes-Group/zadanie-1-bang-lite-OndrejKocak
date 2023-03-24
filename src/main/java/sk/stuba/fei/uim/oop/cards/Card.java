@@ -17,12 +17,11 @@ public abstract class Card {
     public String getName() {
         return name;
     }
-    public void play(Player playerOnTurn, List<Player> enemies, Decks decks){
+    public void play(Player playerOnTurn, List<Player> enemies){
         System.out.println("Player " + playerOnTurn.getName() + " played card: " + this.name);
     }
 
     protected final Player selectTarget(List<Player> enemies){
-        int targetIndex = 0;
         System.out.println("Available targets: ");
         for(int i = 0; i < enemies.size(); i++){
             Player player = enemies.get(i);
@@ -35,6 +34,7 @@ public abstract class Card {
             }
 
         }
+        int targetIndex = 0;
         while(true){
             targetIndex = KeyboardInput.readInt("Enter the number of your target ");
             if(targetIndex > 0 & targetIndex <= enemies.size()){

@@ -12,46 +12,46 @@ import java.util.Random;
 public class CatBalou extends BrownCard {
     private static final String CARD_NAME="Cat Balou";
     private final Random random;
-    public CatBalou() {
-        super(CARD_NAME);
+    public CatBalou(Decks decks) {
+        super(CARD_NAME, decks);
         random = new Random();
     }
 
     @Override
-    public void play(Player playerOnTurn, List<Player> enemies, Decks decks) {
-        super.play(playerOnTurn, enemies, decks);
+    public void play(Player playerOnTurn, List<Player> enemies) {
+        super.play(playerOnTurn, enemies);
         this.filterEnemiesWithoutCards(enemies);
         Player target = super.selectTarget(enemies);
-        int cardInHand = target.getNumberOfCardsHand();
-        int activeBlueCards = target.getNumberOfCardsInFront();
-        if(cardInHand > 0 & activeBlueCards > 0){
+        int numberOfCardInHand = target.getNumberOfCardsHand();
+        int numberOfCardsInFront = target.getNumberOfCardsInFront();
+        if(numberOfCardInHand > 0 & numberOfCardsInFront > 0){
             int select;
             while(true){
                 System.out.println("Select from where you want to discard card: ");
-                System.out.println("(1) Hand: " + cardInHand + " cards");
-                System.out.println("(2) Active blue cards: " + activeBlueCards + " cards");
+                System.out.println("(1) Hand: " + numberOfCardInHand + " cards");
+                System.out.println("(2) Active blue cards: " + numberOfCardsInFront + " cards");
                 select = KeyboardInput.readInt();
                 if(select == 1 | select == 2){
-                    decks.discardCard(chooseCard(target, select));
+                    this.decks.discardCard(chooseCard(target, select));
                     break;
                 } else{
                     System.out.println("You entered wrong number. Please try again");
                 }
             }
-        } else if (cardInHand > 0) {
+        } else if (numberOfCardInHand > 0) {
             System.out.println("Player "+target.getName()+" dont have any active blueCards. Card will be chosen from his hand");
-            decks.discardCard(chooseCard(target, 1));
+            this.decks.discardCard(chooseCard(target, 1));
         }
         else {
             System.out.println("Player "+target.getName()+" dont have any cards in hand. Card will be chosen from his active cards");
-            decks.discardCard(chooseCard(target, 2));
+            this.decks.discardCard(chooseCard(target, 2));
         }
     }
 
     private void filterEnemiesWithoutCards(List<Player> enemies){
         for(Player player : enemies){
             if(player.getNumberOfCardsHand() == 0 & player.getNumberOfCardsInFront() == 0){
-                System.out.println("You cannot play Cat Balou on "+player.getName()+" because he/she doesn't have any cards.");
+                System.out.println("You cannot play "+this.name + " on "+player.getName()+" because he/she doesn't have any cards.");
                 enemies.remove(player);
             }
         }

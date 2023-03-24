@@ -1,14 +1,20 @@
 package sk.stuba.fei.uim.oop.cards.brown;
 
-import sk.stuba.fei.uim.oop.cards.Card;
+import sk.stuba.fei.uim.oop.decks.Decks;
 import sk.stuba.fei.uim.oop.player.Player;
 
 import java.util.List;
 
-public class Missed extends Card {
+public class Missed extends BrownCard {
     private static final String CARD_NAME = "Missed";
-    public Missed() {
-        super(CARD_NAME);
+    public Missed(Decks decks) {
+        super(CARD_NAME, decks);
+    }
+
+    @Override
+    public void play(Player playerOnTurn, List<Player> enemies) {
+        System.out.println("Your Bang was dodged with miss");
+        this.decks.discardCard(this);
     }
 
     @Override

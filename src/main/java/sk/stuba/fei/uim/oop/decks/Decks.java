@@ -24,22 +24,22 @@ public class Decks {
 
     private void createDeck(){
         for(int i = 0; i < 30; i++){
-            this.deck.add(new Bang());
+            this.deck.add(new Bang(this));
         }
         for(int i = 0; i < 15; i++){
-            this.deck.add(new Missed());
+            this.deck.add(new Missed(this));
         }
         for(int i = 0; i < 8; i++){
-            this.deck.add(new Beer());
+            this.deck.add(new Beer(this));
         }
         for(int i = 0; i < 4; i++){
-            this.deck.add(new Stagecoach());
+            this.deck.add(new Stagecoach(this));
         }
         for(int i = 0; i < 2; i++){
-            this.deck.add(new Indians());
+            this.deck.add(new Indians(this));
         }
         for(int i = 0; i < 6; i++){
-            this.deck.add(new CatBalou());
+            this.deck.add(new CatBalou(this));
         }
         for(int i = 0; i < 2; i++){
             this.deck.add(new Barrel());
