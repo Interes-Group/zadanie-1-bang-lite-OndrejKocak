@@ -8,7 +8,6 @@ import sk.stuba.fei.uim.oop.decks.Decks;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 import sk.stuba.fei.uim.oop.player.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -62,7 +61,7 @@ public class Game {
 
 
         while(this.getNumberOfPlayersAlive() > 1){
-            List<Player> enemies = this.getEnemies(playerOnTurn);
+            List<Player> enemies = playerOnTurn.getEnemies(players);
             if(playerOnTurn.getNumberOfPlayableCards(enemies) == 0){
                 System.out.println("You don't have any more playable cards. Your turn is ending.");
                 break;
@@ -73,7 +72,7 @@ public class Game {
 
             if(continueTurn == 1){
                 this.printSpacer();
-                this.playCard(playerOnTurn);
+                this.playCard(playerOnTurn, enemies);
             } else if (continueTurn == 0) {
                 this.printSpacer();
                 this.discardCard(playerOnTurn);
@@ -100,50 +99,50 @@ public class Game {
         System.out.println("(0) End turn");
     }
 
-    private void playCard(Player playerOnTurn){
-        List<Card> playableCards = playerOnTurn.getPlayableCards(getEnemies(playerOnTurn));
-        int choosedCardIndex = this.chooseCard(playableCards, "play");
+    private void playCard(Player playerOnTurn, List<Player> enemies){
+        List<Card> playableCards = playerOnTurn.getPlayableCards(enemies);
+        int chosenCardIndex = this.chooseCard(playableCards, "play");
         this.printSpacer();
-        if(choosedCardIndex == -1){
+        if(chosenCardIndex == -1){
             return;
         }
-        Card choosedCard = playableCards.get(choosedCardIndex);
+        Card choosedCard = playableCards.get(chosenCardIndex);
         playerOnTurn.removeCardFromHand(choosedCard);
-        choosedCard.play(playerOnTurn, this.getEnemies(playerOnTurn));
+        choosedCard.play(playerOnTurn, enemies);
     }
 
     private void discardCard(Player playerOnTurn){
-        int choosedCardIndex = 0;
+        int chosenCardIndex = 0;
         List<Card> cardsOnHand = playerOnTurn.getCardsInHand();
         int numberOfCardsAboveLives = playerOnTurn.getNumberOfCardsHand() - playerOnTurn.getLives();
         for(int i = 0; i < numberOfCardsAboveLives; i++){
             this.printSpacer();
             System.out.println("You have more cards in your hand than you have lives you need to discard "+ (i+1) + " cards.");
-            choosedCardIndex = this.chooseCard(cardsOnHand, "discard");
-            Card choosedCard = cardsOnHand.get(choosedCardIndex);
+            chosenCardIndex = this.chooseCard(cardsOnHand, "discard");
+            Card choosedCard = cardsOnHand.get(chosenCardIndex);
             playerOnTurn.removeCardFromHand(choosedCard);
             this.decks.discardCard(choosedCard);
-            System.out.println("You discarted " + choosedCard.getName());
+            System.out.println("You discarded " + choosedCard.getName());
         }
     }
 
 
     private int chooseCard(List<Card> cards, String verb){
-        int choosedCardIndex = 0;
+        int chosenCardIndex = 0;
         while(true){
             System.out.println("You can "+ verb + " this cards: ");
             printCards(cards, true);
             if(verb.equals("play")){
                 System.out.println("(0) Cancel play");
             }
-            choosedCardIndex = KeyboardInput.readInt("Enter the number of card you want to "+ verb);
-            if((choosedCardIndex < 0) | (choosedCardIndex > cards.size())){
+            chosenCardIndex = KeyboardInput.readInt("Enter the number of card you want to "+ verb);
+            if((chosenCardIndex < 0) | (chosenCardIndex > cards.size())){
                 System.out.println("You entered invalid number! Please try again.");
             } else{
                 break;
             }
         }
-        return choosedCardIndex-1;
+        return chosenCardIndex-1;
     }
 
 
@@ -173,15 +172,7 @@ public class Game {
         System.out.println("========================================");
     }
 
-    private List<Player> getEnemies(Player playerOnTurn){
-        List<Player> playersAlive = new ArrayList<>();
-        for(Player player : this.players){
-            if(player.isAlive() & !player.equals(playerOnTurn)){
-                playersAlive.add(player);
-            }
-        }
-        return playersAlive;
-    }
+
 
 
     private void checkDynamite(Player playerOnTurn){
