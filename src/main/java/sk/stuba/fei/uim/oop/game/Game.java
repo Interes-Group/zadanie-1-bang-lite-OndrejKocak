@@ -23,15 +23,12 @@ public class Game {
     }
 
     private void initPlayers(){
-        int numberOfPlayers;
-        while(true){
+        int numberOfPlayers = 0;
+        while(numberOfPlayers < 2 || numberOfPlayers > 4){
             numberOfPlayers = KeyboardInput.readInt("Enter the number of players (2-4)");
 
-            if((numberOfPlayers >= 2) && (numberOfPlayers <= 4)){
-                break;
-            }
-            else{
-                System.out.println("You entered wrong number. Please enter the number from range (2-4).");
+            if(numberOfPlayers < 2 || numberOfPlayers > 4){
+                System.out.println("You entered invalid number. Please enter the number from range (2-4).");
             }
 
         }
@@ -63,8 +60,13 @@ public class Game {
         System.out.println("Player " + playerOnTurn.getName() + " is starting his/her turn.");
         playerOnTurn.takeCards(decks.drawCards(2));
 
-        int numberOfPlayableCards = playerOnTurn.getNumberOfPlayableCards(this.getEnemies(playerOnTurn));
-        while(numberOfPlayableCards > 0 && this.getNumberOfPlayersAlive() > 1){
+
+        while(this.getNumberOfPlayersAlive() > 1){
+            List<Player> enemies = this.getEnemies(playerOnTurn);
+            if(playerOnTurn.getNumberOfPlayableCards(enemies) == 0){
+                System.out.println("You don't have any more playable cards. Your turn is ending.");
+                break;
+            }
             this.printTurnInfo(playerOnTurn);
 
             int continueTurn = KeyboardInput.readInt();
@@ -72,30 +74,26 @@ public class Game {
             if(continueTurn == 1){
                 this.printSpacer();
                 this.playCard(playerOnTurn);
-                numberOfPlayableCards = playerOnTurn.getNumberOfPlayableCards(this.getEnemies(playerOnTurn));
             } else if (continueTurn == 0) {
                 this.printSpacer();
                 this.discardCard(playerOnTurn);
                 break;
             }
             else {
-                System.out.println("You entered wrong number. Please try again.");
+                System.out.println("You entered invalid number. Please try again.");
             }
             this.printSpacer();
-        }
-        if(numberOfPlayableCards == 0){
-            System.out.println("You don't have any more playable cards. Your turn is ending.");
         }
         printSpacer();
     }
 
     private void printTurnInfo(Player playerOnTurn){
-        System.out.println("Lives: "+ playerOnTurn.getLives());
         System.out.println("Cards in front of "+ playerOnTurn.getName()+":");
         this.printCards(playerOnTurn.getCardsInFront());
         System.out.println("Cards in "+ playerOnTurn.getName() + "'s hand:");
         this.printCards(playerOnTurn.getCardsInHand(), false);
-
+        this.printSpacer();
+        System.out.println("Lives: "+ playerOnTurn.getLives());
         this.printSpacer();
         System.out.println("Do you want continue your turn?");
         System.out.println("(1) Play the card");
@@ -117,13 +115,15 @@ public class Game {
     private void discardCard(Player playerOnTurn){
         int choosedCardIndex = 0;
         List<Card> cardsOnHand = playerOnTurn.getCardsInHand();
-        while(playerOnTurn.getCardsInHand().size() > playerOnTurn.getLives()){
+        int numberOfCardsAboveLives = playerOnTurn.getNumberOfCardsHand() - playerOnTurn.getLives();
+        for(int i = 0; i < numberOfCardsAboveLives; i++){
             this.printSpacer();
-            System.out.println("You have more cards in your hand than you have lives you need to discard some.");
+            System.out.println("You have more cards in your hand than you have lives you need to discard "+ (i+1) + " cards.");
             choosedCardIndex = this.chooseCard(cardsOnHand, "discard");
             Card choosedCard = cardsOnHand.get(choosedCardIndex);
             playerOnTurn.removeCardFromHand(choosedCard);
             this.decks.discardCard(choosedCard);
+            System.out.println("You discarted " + choosedCard.getName());
         }
     }
 
@@ -138,7 +138,7 @@ public class Game {
             }
             choosedCardIndex = KeyboardInput.readInt("Enter the number of card you want to "+ verb);
             if((choosedCardIndex < 0) | (choosedCardIndex > cards.size())){
-                System.out.println("You entered wrong number! Please try again");
+                System.out.println("You entered invalid number! Please try again.");
             } else{
                 break;
             }
