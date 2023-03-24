@@ -51,6 +51,7 @@ public class Game {
         }
         Player winner = getWinner();
         System.out.println("Everyone died. Except " + winner.getName() + " who now dominates wild west.");
+        System.out.println("====WINNER: "+ winner.getName()+" ====");
 
     }
 
@@ -83,7 +84,7 @@ public class Game {
             }
             this.printSpacer();
         }
-        printSpacer();
+        this.printSpacer();
     }
 
     private void printTurnInfo(Player playerOnTurn){
@@ -131,7 +132,7 @@ public class Game {
         int chosenCardIndex = 0;
         while(true){
             System.out.println("You can "+ verb + " this cards: ");
-            printCards(cards, true);
+            this.printCards(cards, true);
             if(verb.equals("play")){
                 System.out.println("(0) Cancel play");
             }
