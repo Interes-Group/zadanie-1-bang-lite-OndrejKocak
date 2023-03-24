@@ -29,12 +29,9 @@ public class Player {
     public void addLive() {
         this.lives++;
     }
+    
 
-    public  void removeLive(){
-        this.lives--;
-    }
-
-    public void removeLive(int numberOfLives){
+    public void removeLives(int numberOfLives){
         this.lives -= numberOfLives;
         if(lives < 0){
             lives = 0;

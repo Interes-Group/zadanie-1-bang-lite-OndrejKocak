@@ -10,8 +10,10 @@ import java.util.List;
 
 public class Bang extends BrownCard {
     private static final String CARD_NAME = "Bang";
+    private final int damage;
     public Bang(Decks decks) {
         super(CARD_NAME, decks);
+        damage = 1;
     }
 
     @Override
@@ -37,8 +39,8 @@ public class Bang extends BrownCard {
                 return;
             }
         }
-        target.removeLive();
-        System.out.println("Player "+ target.getName() + " was shot with "+this.name+" and lost 1 live.");
+        target.removeLives(this.damage);
+        System.out.println("Player "+ target.getName() + " was shot with "+this.name+" and lost "+this.damage+" live.");
         super.checkKill(target, this.decks);
     }
 

@@ -9,15 +9,17 @@ import java.util.List;
 public class Dynamite extends BlueCard{
     private static final String CARD_NAME = "Dynamite";
     private static final int BOUND=8;
+    private final int damage;
     public Dynamite() {
         super(CARD_NAME, BOUND);
+        this.damage = 3;
     }
 
 
 
     public void explode(Player player, Decks decks){
-        System.out.println("Dynamite exploded in "+player.getName()+"'s hands.");
-        player.removeLive(3);
+        System.out.println("Dynamite exploded in "+player.getName()+"'s hands. You lost "+ this.damage+" lives.");
+        player.removeLives(this.damage);
         checkKill(player, decks);
     }
 
@@ -25,6 +27,7 @@ public class Dynamite extends BlueCard{
     public boolean isPlayable(Player playerOnTurn, List<Player> enemies) {
        for(Card card : playerOnTurn.getCardsInFront()){
            if(card instanceof Dynamite){
+               System.out.println(this.name + " is not playable. You already have one in front of you.");
                return false;
            }
        }

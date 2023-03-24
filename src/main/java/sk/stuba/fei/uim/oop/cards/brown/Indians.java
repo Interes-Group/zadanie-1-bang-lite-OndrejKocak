@@ -8,8 +8,10 @@ import java.util.List;
 
 public class Indians extends BrownCard {
     private static final String CARD_NAME="Indians";
+    private final int damage;
     public Indians(Decks decks) {
         super(CARD_NAME, decks);
+        damage = 1;
     }
 
     @Override
@@ -26,8 +28,8 @@ public class Indians extends BrownCard {
                 }
             }
             if(!hasBang){
-                target.removeLive();
-                System.out.println("Player "+ target.getName() + " dont have bang and lost 1 live");
+                target.removeLives(this.damage);
+                System.out.println("Player "+ target.getName() + " dont have bang and lost "+this.damage+" live");
                 super.checkKill(target, this.decks);
             }
             else {

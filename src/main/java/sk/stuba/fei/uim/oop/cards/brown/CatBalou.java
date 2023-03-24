@@ -85,7 +85,7 @@ public class CatBalou extends BrownCard {
                 return true;
             }
         }
-        System.out.println("You cannot play Cat balou because your enemies don't have any cards.");
+        System.out.println(this.name + " is not playable because your enemies don't have any cards.");
         return false;
     }
 
