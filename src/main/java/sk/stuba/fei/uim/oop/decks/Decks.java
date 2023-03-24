@@ -65,6 +65,10 @@ public class Decks {
         discardedDeck.add(card);
     }
 
+    public void discardCards(List<Card> cards){
+        discardedDeck.addAll(cards);
+    }
+
     private void swapDecks(){
         this.deck.addAll(discardedDeck);
         this.discardedDeck.clear();
