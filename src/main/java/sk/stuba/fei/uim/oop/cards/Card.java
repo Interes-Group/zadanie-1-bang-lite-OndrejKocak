@@ -48,9 +48,7 @@ public abstract class Card {
 
     protected final void checkKill(Player target, Decks decks){
         if(!target.isAlive()){
-            for (Card card : target.die()){
-                decks.discardCard(card);
-            }
+            decks.discardCards(target.die());
             System.out.println("Player "+target.getName()+" died.");
         }
     }
