@@ -68,6 +68,7 @@ public class Game {
             if (playerOnTurn.getNumberOfPlayableCards(enemies) == 0) {
                 this.printSpacer();
                 System.out.println("You don't have any more playable cards. Your turn is ending.");
+                this.discardCard(playerOnTurn);
                 break;
             }
             this.printTurnInfo(playerOnTurn);
