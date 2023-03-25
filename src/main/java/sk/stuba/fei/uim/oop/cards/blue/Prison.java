@@ -27,6 +27,7 @@ public class Prison extends BlueCard {
                 if(card instanceof Prison){
                     System.out.println("You cannot use prison on player "+enemy.getName() + " because he/she has prison already active.");
                     enemies.remove(enemy);
+                    break;
                 }
             }
         }

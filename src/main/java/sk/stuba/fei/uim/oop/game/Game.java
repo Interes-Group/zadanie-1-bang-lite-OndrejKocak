@@ -84,7 +84,6 @@ public class Game {
             }
             this.printSpacer();
         }
-        this.printSpacer();
     }
 
     private void printTurnInfo(Player playerOnTurn){
