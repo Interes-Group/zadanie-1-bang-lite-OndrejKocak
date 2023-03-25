@@ -43,7 +43,6 @@ public class Game {
     private void startGame() {
         System.out.println("============= Game started =============");
         while (this.getNumberOfPlayersAlive() > 1) {
-            this.printSpacer();
             Player playerOnTurn = this.players[currentPlayer];
             checkDynamite(playerOnTurn);
             if (playerOnTurn.isAlive() && checkPrison(playerOnTurn)) {
@@ -59,6 +58,7 @@ public class Game {
 
 
     private void makeTurn(Player playerOnTurn) {
+        this.printSpacer();
         System.out.println("Player " + playerOnTurn.getName() + " is starting his/her turn.");
         playerOnTurn.takeCards(decks.drawCards(2));
 
