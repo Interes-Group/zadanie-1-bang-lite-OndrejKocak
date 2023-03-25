@@ -53,7 +53,7 @@ public class Game {
         }
         Player winner = getWinner();
         System.out.println("Everyone died. Except " + winner.getName() + " who now dominates wild west.");
-        System.out.println("====WINNER: " + winner.getName() + " ====");
+        System.out.println("==== WINNER: " + winner.getName() + " ====");
 
     }
 
