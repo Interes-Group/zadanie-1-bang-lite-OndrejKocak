@@ -8,12 +8,13 @@ import java.util.List;
 
 public abstract class BrownCard extends Card {
     protected Decks decks;
+
     public BrownCard(String name, Decks decks) {
         super(name);
         this.decks = decks;
     }
 
-    public void play(Player playerOnTurn, List<Player> enemies){
+    public void play(Player playerOnTurn, List<Player> enemies) {
         super.play(playerOnTurn, enemies);
         this.decks.discardCard(this);
     }

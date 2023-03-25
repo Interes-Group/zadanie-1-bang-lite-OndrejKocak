@@ -7,8 +7,9 @@ import sk.stuba.fei.uim.oop.decks.Decks;
 import java.util.List;
 
 public class Indians extends BrownCard {
-    private static final String CARD_NAME="Indians";
+    private static final String CARD_NAME = "Indians";
     private final int damage;
+
     public Indians(Decks decks) {
         super(CARD_NAME, decks);
         damage = 1;
@@ -17,23 +18,22 @@ public class Indians extends BrownCard {
     @Override
     public void play(Player playerOnTurn, List<Player> enemies) {
         super.play(playerOnTurn, enemies);
-        for(Player target : enemies){
+        for (Player target : enemies) {
             boolean hasBang = false;
-            for(Card card : target.getCardsInHand()){
-                if(card instanceof Bang){
+            for (Card card : target.getCardsInHand()) {
+                if (card instanceof Bang) {
                     hasBang = true;
                     target.removeCardFromHand(card);
                     this.decks.discardCard(card);
                     break;
                 }
             }
-            if(!hasBang){
+            if (!hasBang) {
                 target.removeLives(this.damage);
-                System.out.println("Player "+ target.getName() + " dont have bang and lost "+this.damage+" live");
+                System.out.println("Player " + target.getName() + " dont have bang and lost " + this.damage + " live");
                 super.checkKill(target, this.decks);
-            }
-            else {
-                System.out.println("Player "+ target.getName() + " discarded bang");
+            } else {
+                System.out.println("Player " + target.getName() + " discarded bang");
             }
         }
     }

@@ -9,7 +9,8 @@ import java.util.Random;
 
 public abstract class BlueCard extends Card {
     protected Random random;
-    private final int  bound;
+    private final int bound;
+
     public BlueCard(String name, int bound) {
         super(name);
         random = new Random();
@@ -24,7 +25,7 @@ public abstract class BlueCard extends Card {
         System.out.println(this.name + " was added in front you.");
     }
 
-    public boolean checkEffect(){
+    public boolean checkEffect() {
         return random.nextInt(this.bound) == 1;
     }
 }

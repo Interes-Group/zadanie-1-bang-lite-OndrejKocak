@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Beer extends BrownCard {
     private static final String CARD_NAME = "Beer";
-    public Beer(Decks decks){
+
+    public Beer(Decks decks) {
         super(CARD_NAME, decks);
     }
 

@@ -11,6 +11,7 @@ import java.util.List;
 public class Bang extends BrownCard {
     private static final String CARD_NAME = "Bang";
     private final int damage;
+
     public Bang(Decks decks) {
         super(CARD_NAME, decks);
         damage = 1;
@@ -20,27 +21,26 @@ public class Bang extends BrownCard {
     public void play(Player playerOnTurn, List<Player> enemies) {
         super.play(playerOnTurn, enemies);
         Player target = super.selectTarget(enemies);
-        for(BlueCard card : target.getCardsInFront()){
-            if(card instanceof Barrel){
-                if(card.checkEffect()){
-                    System.out.println("Player "+target.getName()+" avoided " + this.name + " with Barrel");
+        for (BlueCard card : target.getCardsInFront()) {
+            if (card instanceof Barrel) {
+                if (card.checkEffect()) {
+                    System.out.println("Player " + target.getName() + " avoided " + this.name + " with Barrel");
                     return;
-                }
-                else {
+                } else {
                     System.out.println("Barrel wasn't activated.");
                 }
 
             }
         }
-        for(Card card : target.getCardsInHand()){
-            if(card instanceof Missed){
+        for (Card card : target.getCardsInHand()) {
+            if (card instanceof Missed) {
                 target.removeCardFromHand(card);
                 card.play(playerOnTurn, enemies);
                 return;
             }
         }
         target.removeLives(this.damage);
-        System.out.println("Player "+ target.getName() + " was shot with "+this.name+" and lost "+this.damage+" live.");
+        System.out.println("Player " + target.getName() + " was shot with " + this.name + " and lost " + this.damage + " live.");
         super.checkKill(target, this.decks);
     }
 
