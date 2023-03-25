@@ -160,6 +160,7 @@ public class Game {
     private void printCards(List<BlueCard> cards) {
         if (cards.size() == 0) {
             System.out.println("--> NONE");
+            return;
         }
         for (BlueCard card : cards) {
             System.out.println("--> " + card.getName());
