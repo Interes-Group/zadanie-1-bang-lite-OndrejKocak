@@ -16,23 +16,32 @@ public class Prison extends BlueCard {
     @Override
     public void play(Player playerOnTurn, List<Player> enemies) {
         System.out.println("Player " + playerOnTurn.getName() + " played card: " + this.name);
-        Player target = this.selectTarget(filterEnemiesWithPrison(enemies));
+        Player target = this.selectTarget(filterEnemiesWithPrison(enemies, true));
         target.activateCard(this);
         System.out.println("Prison was added in front of " + target.getName());
     }
 
 
     @Override
-    public boolean isPlayable(Player playerOnTurn, List<Player> enemies) {
-       return filterEnemiesWithPrison(enemies).size() > 0;
+    public boolean isPlayable(Player playerOnTurn, List<Player> enemies, boolean excuse) {
+        if(filterEnemiesWithPrison(enemies, false).size() > 0){
+            return true;
+        }
+        if(excuse){
+            System.out.println("Everyone already have "+this.name+" in front of him/her.");
+        }
+       return false;
     }
-    private List<Player> filterEnemiesWithPrison(List<Player> enemies){
+    private List<Player> filterEnemiesWithPrison(List<Player> enemies, boolean excuse){
         List<Player> enemiesWithoutPrison = new ArrayList<>();
         for(Player enemy : enemies){
             boolean hasPrison = false;
             for(Card card : enemy.getCardsInFront()){
                 if(card instanceof Prison){
                     hasPrison = true;
+                    if(excuse){
+                        System.out.println("You cannot play "+this.name + " on "+enemy.getName()+" because he/she has already "+this.name+" in front of them.");
+                    }
                     break;
                 }
             }

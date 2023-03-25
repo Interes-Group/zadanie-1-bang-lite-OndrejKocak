@@ -14,9 +14,12 @@ public class Barrel extends BlueCard {
 
 
     @Override
-    public boolean isPlayable(Player playerOnTurn, List<Player> enemies) {
+    public boolean isPlayable(Player playerOnTurn, List<Player> enemies, boolean excuse) {
        for(Card card: playerOnTurn.getCardsInFront()){
            if(card instanceof Barrel){
+               if(excuse){
+                   System.out.println(this.name + " is not playable because you already have one in front of you.");
+               }
                return false;
            }
        }

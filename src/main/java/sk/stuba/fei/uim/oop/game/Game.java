@@ -100,7 +100,7 @@ public class Game {
     }
 
     private void playCard(Player playerOnTurn, List<Player> enemies){
-        List<Card> playableCards = playerOnTurn.getPlayableCards(enemies);
+        List<Card> playableCards = playerOnTurn.getPlayableCards(enemies, true);
         int chosenCardIndex = this.chooseCard(playableCards, "play");
         this.printSpacer();
         if(chosenCardIndex == -1){

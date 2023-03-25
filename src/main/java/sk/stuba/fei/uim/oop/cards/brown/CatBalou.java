@@ -6,6 +6,7 @@ import sk.stuba.fei.uim.oop.player.Player;
 import sk.stuba.fei.uim.oop.decks.Decks;
 import sk.stuba.fei.uim.oop.utility.KeyboardInput;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -20,20 +21,20 @@ public class CatBalou extends BrownCard {
     @Override
     public void play(Player playerOnTurn, List<Player> enemies) {
         super.play(playerOnTurn, enemies);
-        this.filterEnemiesWithoutCards(enemies);
-        Player target = super.selectTarget(enemies);
+        Player target = this.selectTarget(this.filterEnemiesWithoutCards(enemies, true));
         this.decks.discardCard(chooseCard(target, selectCardSource(target)));
     }
 
-    private void filterEnemiesWithoutCards(List<Player> enemies){
-        for(Player player : enemies){
-            if(player.getNumberOfCardsHand() == 0 & player.getNumberOfCardsInFront() == 0){
-                System.out.println("You cannot play "+this.name + " on "+player.getName()+" because he/she doesn't have any cards.");
-                enemies.remove(player);
-            }
+    @Override
+    public boolean isPlayable(Player playerOnTurn, List<Player> enemies, boolean excuse) {
+        if(filterEnemiesWithoutCards(enemies, false).size() > 0){
+            return true;
         }
+        if(excuse){
+            System.out.println(this.name + " is not playable because your enemies does not have any cards.");
+        }
+        return false;
     }
-
     private int selectCardSource(Player target){
         int numberOfCardInHand = target.getNumberOfCardsHand();
         int numberOfCardsInFront = target.getNumberOfCardsInFront();
@@ -80,15 +81,18 @@ public class CatBalou extends BrownCard {
             return card;
         }
     }
-
-    @Override
-    public boolean isPlayable(Player playerOnTurn, List<Player> enemies) {
-        for(Player player : enemies){
-            if(player.getCardsInHand().size() > 0 | player.getCardsInFront().size() > 0){
-                return true;
+    private List<Player> filterEnemiesWithoutCards(List<Player> enemies, boolean excuse){
+        List<Player> enemiesWithCards = new ArrayList<>();
+        for(Player enemy : enemies){
+            if((enemy.getNumberOfCardsHand() == 0) && (enemy.getNumberOfCardsInFront() == 0)){
+                if(excuse){
+                    System.out.println("You cannot play "+ this.name + " on "+enemy.getName()+" because he/she doesn't have any cards.");
+                }
+            }
+            else {
+                enemiesWithCards.add(enemy);
             }
         }
-        return false;
+        return enemiesWithCards;
     }
-
 }

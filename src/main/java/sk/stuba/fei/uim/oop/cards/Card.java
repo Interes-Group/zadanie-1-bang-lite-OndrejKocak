@@ -53,7 +53,7 @@ public abstract class Card {
         }
     }
 
-    public boolean isPlayable(Player playerOnTurn, List<Player> enemies){
+    public boolean isPlayable(Player playerOnTurn, List<Player> enemies, boolean excuse){
         return true;
     }
 

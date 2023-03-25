@@ -50,10 +50,10 @@ public class Player {
         return cardsInFront.size();
     }
 
-    public List<Card> getPlayableCards(List<Player> enemies){
+    public List<Card> getPlayableCards(List<Player> enemies, boolean excuse){
         List<Card> playableCards = new ArrayList<>();
         for(Card card : cardsInHand){
-            if(card.isPlayable(this, enemies)){
+            if(card.isPlayable(this, enemies, excuse)){
                 playableCards.add(card);
             }
         }
@@ -61,7 +61,7 @@ public class Player {
     }
 
     public int getNumberOfPlayableCards(List<Player> enemies){
-        return getPlayableCards(enemies).size();
+        return getPlayableCards(enemies, false).size();
     }
 
     public void addLive() {
