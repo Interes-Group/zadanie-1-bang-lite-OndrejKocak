@@ -183,7 +183,7 @@ public class Game {
                     ((Dynamite) card).explode(playerOnTurn, this.decks);
                     decks.discardCard(card);
                 } else {
-                    System.out.println("Dynamite didn't exploded.");
+                    System.out.println("Dynamite didn't exploded in "+playerOnTurn.getName()+"'s hands.");
                     moveDynamite(card);
                 }
                 playerOnTurn.removeCardFromInFront(card);
