@@ -132,14 +132,16 @@ public class Game {
 
     private int chooseCard(List<Card> cards, String verb) {
         int chosenCardIndex = 0;
+        int min = 1;
         while (true) {
             System.out.println("You can " + verb + " this cards: ");
             this.printCards(cards, true);
             if (verb.equals("play")) {
+                min = 0;
                 System.out.println("(0) Cancel play");
             }
             chosenCardIndex = KeyboardInput.readInt("Enter the number of card you want to " + verb);
-            if ((chosenCardIndex < 0) | (chosenCardIndex > cards.size())) {
+            if ((chosenCardIndex < min) || (chosenCardIndex > cards.size())) {
                 System.out.println("You entered invalid number! Please try again.");
             } else {
                 break;
