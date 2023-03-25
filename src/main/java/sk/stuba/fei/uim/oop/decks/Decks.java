@@ -55,7 +55,7 @@ public class Decks {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < numberOfCards; i++) {
             if (getNumberOfAvailableCards() == 0) {
-                System.out.println("There is not enough card in the deck you drawn " + (i + 1) + " card/s.");
+                System.out.println("There is not enough card in the deck you drawn " + i + " card/s.");
                 break;
             } else if (deck.size() == 0) {
                 swapDecks();
