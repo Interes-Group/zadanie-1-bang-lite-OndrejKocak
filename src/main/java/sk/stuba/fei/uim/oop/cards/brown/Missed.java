@@ -13,7 +13,7 @@ public class Missed extends BrownCard {
 
     @Override
     public void play(Player playerOnTurn, List<Player> enemies) {
-        System.out.println("Your Bang was dodged with miss");
+        System.out.println("Your Bang was dodged with missed");
         this.decks.discardCard(this);
     }
 
