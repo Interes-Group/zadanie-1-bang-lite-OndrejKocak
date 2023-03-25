@@ -117,7 +117,7 @@ public class Game {
         int numberOfCardsAboveLives = playerOnTurn.getNumberOfCardsHand() - playerOnTurn.getLives();
         for(int i = 0; i < numberOfCardsAboveLives; i++){
             this.printSpacer();
-            System.out.println("You have more cards in your hand than you have lives you need to discard "+ (i+1) + " cards.");
+            System.out.println("You have more cards in your hand than you have lives you need to discard "+ (numberOfCardsAboveLives-i) + " cards.");
             chosenCardIndex = this.chooseCard(cardsOnHand, "discard");
             Card choosedCard = cardsOnHand.get(chosenCardIndex);
             playerOnTurn.removeCardFromHand(choosedCard);
