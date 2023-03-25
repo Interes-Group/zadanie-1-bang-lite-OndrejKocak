@@ -9,8 +9,9 @@ import java.util.List;
 public class Player {
     private final String name;
     private final List<Card> cardsInHand;
-    private  final List<BlueCard> cardsInFront;
+    private final List<BlueCard> cardsInFront;
     private int lives;
+
     public Player(String name) {
         this.name = name;
         this.lives = 4;
@@ -26,15 +27,16 @@ public class Player {
         return lives;
     }
 
-    public List<Player> getEnemies(Player[] players){
+    public List<Player> getEnemies(Player[] players) {
         List<Player> playersAlive = new ArrayList<>();
-        for(Player player : players){
-            if(player.isAlive() && !player.equals(this)){
+        for (Player player : players) {
+            if (player.isAlive() && !player.equals(this)) {
                 playersAlive.add(player);
             }
         }
         return playersAlive;
     }
+
     public List<Card> getCardsInHand() {
         return cardsInHand;
     }
@@ -43,61 +45,63 @@ public class Player {
         return cardsInFront;
     }
 
-    public int getNumberOfCardsHand(){
+    public int getNumberOfCardsHand() {
         return cardsInHand.size();
     }
-    public int getNumberOfCardsInFront(){
+
+    public int getNumberOfCardsInFront() {
         return cardsInFront.size();
     }
 
-    public List<Card> getPlayableCards(List<Player> enemies, boolean excuse){
+    public List<Card> getPlayableCards(List<Player> enemies, boolean excuse) {
         List<Card> playableCards = new ArrayList<>();
-        for(Card card : cardsInHand){
-            if(card.isPlayable(this, enemies, excuse)){
+        for (Card card : cardsInHand) {
+            if (card.isPlayable(this, enemies, excuse)) {
                 playableCards.add(card);
             }
         }
         return playableCards;
     }
 
-    public int getNumberOfPlayableCards(List<Player> enemies){
+    public int getNumberOfPlayableCards(List<Player> enemies) {
         return getPlayableCards(enemies, false).size();
     }
 
     public void addLive() {
         this.lives++;
     }
-    
 
-    public void removeLives(int numberOfLives){
+
+    public void removeLives(int numberOfLives) {
         this.lives -= numberOfLives;
-        if(lives < 0){
+        if (lives < 0) {
             lives = 0;
         }
     }
 
 
-    public void takeCards(List<Card> cards){
+    public void takeCards(List<Card> cards) {
         this.cardsInHand.addAll(cards);
     }
 
-    public void activateCard(BlueCard card){
+    public void activateCard(BlueCard card) {
         cardsInFront.add(card);
     }
 
-    public void removeCardFromInFront(BlueCard card){
+    public void removeCardFromInFront(BlueCard card) {
         cardsInFront.remove(card);
     }
 
-    public void removeCardFromHand(Card card){
+    public void removeCardFromHand(Card card) {
         cardsInHand.remove(card);
     }
 
 
-    public boolean isAlive(){
+    public boolean isAlive() {
         return lives > 0;
     }
-    public List<Card> die(){
+
+    public List<Card> die() {
         List<Card> allCards = new ArrayList<>(cardsInHand);
         cardsInHand.clear();
         allCards.addAll(cardsInFront);

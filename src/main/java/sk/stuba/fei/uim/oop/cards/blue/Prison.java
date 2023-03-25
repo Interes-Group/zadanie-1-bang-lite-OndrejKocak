@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Prison extends BlueCard {
-    private static final String CARD_NAME="Prison";
-    private  static final int BOUND=4;
+    private static final String CARD_NAME = "Prison";
+    private static final int BOUND = 4;
+
     public Prison() {
         super(CARD_NAME, BOUND);
     }
@@ -24,28 +25,29 @@ public class Prison extends BlueCard {
 
     @Override
     public boolean isPlayable(Player playerOnTurn, List<Player> enemies, boolean excuse) {
-        if(filterEnemiesWithPrison(enemies, false).size() > 0){
+        if (filterEnemiesWithPrison(enemies, false).size() > 0) {
             return true;
         }
-        if(excuse){
-            System.out.println("Everyone already have "+this.name+" in front of him/her.");
+        if (excuse) {
+            System.out.println("Everyone already have " + this.name + " in front of him/her.");
         }
-       return false;
+        return false;
     }
-    private List<Player> filterEnemiesWithPrison(List<Player> enemies, boolean excuse){
+
+    private List<Player> filterEnemiesWithPrison(List<Player> enemies, boolean excuse) {
         List<Player> enemiesWithoutPrison = new ArrayList<>();
-        for(Player enemy : enemies){
+        for (Player enemy : enemies) {
             boolean hasPrison = false;
-            for(Card card : enemy.getCardsInFront()){
-                if(card instanceof Prison){
+            for (Card card : enemy.getCardsInFront()) {
+                if (card instanceof Prison) {
                     hasPrison = true;
-                    if(excuse){
-                        System.out.println("You cannot play "+this.name + " on "+enemy.getName()+" because he/she has already "+this.name+" in front of them.");
+                    if (excuse) {
+                        System.out.println("You cannot play " + this.name + " on " + enemy.getName() + " because he/she has already " + this.name + " in front of them.");
                     }
                     break;
                 }
             }
-            if(!hasPrison){
+            if (!hasPrison) {
                 enemiesWithoutPrison.add(enemy);
             }
         }

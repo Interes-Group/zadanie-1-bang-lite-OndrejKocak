@@ -7,7 +7,7 @@ import sk.stuba.fei.uim.oop.player.Player;
 import java.util.List;
 
 public class Stagecoach extends BrownCard {
-    private static final String CARD_NAME="Stagecoach";
+    private static final String CARD_NAME = "Stagecoach";
     private final int numberOfCardsToDraw;
 
     public Stagecoach(Decks decks) {
@@ -20,15 +20,15 @@ public class Stagecoach extends BrownCard {
         super.play(playerOnTurn, enemies);
         List<Card> drawnCards = this.decks.drawCards(this.numberOfCardsToDraw);
         playerOnTurn.takeCards(drawnCards);
-        System.out.println("Player " + playerOnTurn.getName() + " drawn "+this.numberOfCardsToDraw+" cards.");
+        System.out.println("Player " + playerOnTurn.getName() + " drawn " + this.numberOfCardsToDraw + " cards.");
     }
 
     @Override
     public boolean isPlayable(Player playerOnTurn, List<Player> enemies, boolean excuse) {
-        if(decks.getNumberOfAvailableCards() >= this.numberOfCardsToDraw){
+        if (decks.getNumberOfAvailableCards() >= this.numberOfCardsToDraw) {
             return true;
         }
-        if(excuse){
+        if (excuse) {
             System.out.println(this.name + " is not playable because there is not enough cards in decks.");
         }
         return false;

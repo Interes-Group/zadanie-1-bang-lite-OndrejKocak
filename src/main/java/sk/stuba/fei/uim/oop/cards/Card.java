@@ -27,9 +27,9 @@ public abstract class Card {
             Player player = enemies.get(i);
 
             System.out.println("(" + (i + 1) + ") " + player.getName());
-            System.out.println("--> Lives: "+ player.getLives());
-            System.out.println("--> Hand: " + player.getCardsInHand().size()+" card/s");
-            System.out.println("--> In front: " + player.getCardsInFront().size()+ " card/s");
+            System.out.println("--> Lives: " + player.getLives());
+            System.out.println("--> Hand: " + player.getCardsInHand().size() + " card/s");
+            System.out.println("--> In front: " + player.getCardsInFront().size() + " card/s");
 
         }
         int targetIndex = 0;

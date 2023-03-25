@@ -27,7 +27,6 @@ public class CatBalou extends BrownCard {
     }
 
 
-
     @Override
     public boolean isPlayable(Player playerOnTurn, List<Player> enemies, boolean excuse) {
         if (filterEnemiesWithoutCards(enemies, false).size() > 0) {
